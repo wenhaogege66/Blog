@@ -1,3 +1,5 @@
+"use client";
+
 import dynamic from "next/dynamic";
 import Navigation from "@/components/navigation";
 import HeroSection from "@/components/hero-section";
@@ -5,7 +7,7 @@ import AboutSection from "@/components/about-section";
 import ProjectsSection from "@/components/projects-section";
 import BlogSection from "@/components/blog-section";
 import ParticlesBackground from "@/components/ui/particles-background";
-import { getAllPosts } from "@/lib/blog";
+import { useEffect, useState } from "react";
 
 // Dynamically import Three.js component to avoid SSR issues
 const ThreeBackground = dynamic(
@@ -13,14 +15,50 @@ const ThreeBackground = dynamic(
   { ssr: false }
 );
 
-// Dynamically import client components that use the blog data
-const ClientHeroSection = dynamic(() => import("@/components/hero-section"), { ssr: false });
-const ClientAboutSection = dynamic(() => import("@/components/about-section"), { ssr: false });
-const ClientProjectsSection = dynamic(() => import("@/components/projects-section"), { ssr: false });
-const ClientNavigation = dynamic(() => import("@/components/navigation"), { ssr: false });
+// Mock data for now - we'll fetch this client-side
+const mockPosts = [
+  {
+    slug: "welcome-to-my-blog",
+    title: "Welcome to My Tech Blog",
+    date: "2025-01-22",
+    excerpt: "Welcome to my personal blog where I share insights about modern web development, coding tips, and my journey as a full-stack developer.",
+    tags: ["welcome", "blog", "tech", "development"],
+    author: "wenhaogege",
+    published: true,
+    readingTime: 3,
+  },
+  {
+    slug: "nextjs-app-router-guide",
+    title: "Mastering Next.js App Router: A Complete Guide",
+    date: "2025-01-20",
+    excerpt: "Deep dive into Next.js App Router features, including nested layouts, server components, and advanced routing patterns.",
+    tags: ["nextjs", "react", "app-router", "server-components"],
+    author: "wenhaogege",
+    published: true,
+    readingTime: 8,
+  },
+];
 
 export default function Home() {
-  const posts = getAllPosts();
+  const [posts, setPosts] = useState(mockPosts);
+
+  useEffect(() => {
+    // Fetch posts from API
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch('/api/posts');
+        if (response.ok) {
+          const data = await response.json();
+          setPosts(data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch posts:', error);
+        // Keep using mock data as fallback
+      }
+    };
+
+    fetchPosts();
+  }, []);
   return (
     <div className="relative min-h-screen bg-background text-foreground">
       {/* Animated Backgrounds */}
@@ -28,20 +66,20 @@ export default function Home() {
       <ParticlesBackground />
       
       {/* Navigation */}
-      <ClientNavigation />
+      <Navigation />
       
       {/* Main Content */}
       <main className="relative z-10">
         <div id="home">
-          <ClientHeroSection />
+          <HeroSection />
         </div>
         
         <div id="about">
-          <ClientAboutSection />
+          <AboutSection />
         </div>
         
         <div id="projects">
-          <ClientProjectsSection />
+          <ProjectsSection />
         </div>
         
         <div id="blog">
