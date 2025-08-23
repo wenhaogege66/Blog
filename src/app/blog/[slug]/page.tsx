@@ -7,7 +7,7 @@ import BlogCard from "@/components/blog-card";
 import NeonButton from "@/components/ui/neon-button";
 
 interface Props {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
@@ -18,7 +18,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props) {
-  const post = getPostBySlug(params.slug);
+  const { slug } = await params;
+  const post = getPostBySlug(slug);
   
   if (!post) {
     return {
@@ -41,14 +42,15 @@ export async function generateMetadata({ params }: Props) {
 }
 
 export default async function BlogPostPage({ params }: Props) {
-  const post = getPostBySlug(params.slug);
+  const { slug } = await params;
+  const post = getPostBySlug(slug);
   
   if (!post) {
     notFound();
   }
 
   const htmlContent = await markdownToHtml(post.content);
-  const relatedPosts = getRelatedPosts(params.slug);
+  const relatedPosts = getRelatedPosts(slug);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("en-US", {
