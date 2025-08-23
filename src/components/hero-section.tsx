@@ -109,7 +109,7 @@ export default function HeroSection() {
             <NeonButton href="https://github.com/wenhaogege66" variant="ghost">
               <Github className="w-5 h-5" />
             </NeonButton>
-            <NeonButton href="mailto:your-email@example.com" variant="ghost">
+            <NeonButton href="mailto:wenhaogege66@gmail.com" variant="ghost">
               <Mail className="w-5 h-5" />
             </NeonButton>
             <NeonButton href="#" variant="ghost">
