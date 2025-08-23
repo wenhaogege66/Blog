@@ -5,6 +5,7 @@ import { useRef, useMemo } from "react";
 import { Points, PointMaterial } from "@react-three/drei";
 
 function StarField() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const ref = useRef<any>(null);
   
   const [positions, colors] = useMemo(() => {
