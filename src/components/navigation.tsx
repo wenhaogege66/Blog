@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import NeonButton from "@/components/ui/neon-button";
 
 const navItems = [
   { name: "Home", href: "#home" },

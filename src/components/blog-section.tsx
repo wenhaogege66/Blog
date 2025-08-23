@@ -72,7 +72,7 @@ export default function BlogSection({ posts }: BlogSectionProps) {
               No Posts Yet
             </h3>
             <p className="text-muted-foreground mb-8">
-              I'm working on some amazing content. Check back soon!
+              I&apos;m working on some amazing content. Check back soon!
             </p>
             <NeonButton href="/contact" variant="primary">
               Get Notified

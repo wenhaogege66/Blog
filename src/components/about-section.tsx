@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { Code, Coffee, Heart, Zap, Users, Globe } from "lucide-react";
+import { Code, Coffee, Heart, Zap, Globe } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
 const skills = [
@@ -74,7 +74,7 @@ export default function AboutSection() {
           <motion.div variants={itemVariants} className="space-y-6">
             <div className="prose prose-invert max-w-none">
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Hey there! I'm <span className="text-cyan-400 font-semibold">wenhaogege</span>, 
+                Hey there! I&apos;m <span className="text-cyan-400 font-semibold">wenhaogege</span>, 
                 a passionate full-stack developer with a love for creating digital experiences 
                 that make a difference.
               </p>
@@ -85,7 +85,7 @@ export default function AboutSection() {
                 backend systems.
               </p>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                When I'm not coding, you'll find me exploring new technologies, contributing 
+                When I&apos;m not coding, you&apos;ll find me exploring new technologies, contributing 
                 to open source projects, or sharing my knowledge through blog posts and tutorials.
               </p>
             </div>
@@ -99,7 +99,7 @@ export default function AboutSection() {
           {/* Stats */}
           <motion.div variants={itemVariants}>
             <div className="grid grid-cols-2 gap-4">
-              {stats.map((stat, index) => (
+              {stats.map((stat) => (
                 <motion.div
                   key={stat.label}
                   variants={itemVariants}
@@ -125,7 +125,7 @@ export default function AboutSection() {
           animate={inView ? "visible" : "hidden"}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
         >
-          {skills.map((skill, index) => (
+          {skills.map((skill) => (
             <motion.div key={skill.name} variants={itemVariants}>
               <Card className="group border-cyan-500/20 bg-background/50 backdrop-blur-sm hover:border-cyan-500/40 transition-all duration-300 h-full">
                 <CardContent className="p-6">

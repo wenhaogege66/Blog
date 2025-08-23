@@ -60,7 +60,7 @@ export default function BlogPage() {
               No Posts Yet
             </h3>
             <p className="text-muted-foreground">
-              I'm working on some amazing content. Check back soon!
+              I&apos;m working on some amazing content. Check back soon!
             </p>
           </div>
         )}

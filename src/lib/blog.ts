@@ -4,9 +4,6 @@ import matter from "gray-matter";
 import { remark } from "remark";
 import remarkGfm from "remark-gfm";
 import remarkHtml from "remark-html";
-import rehypeHighlight from "rehype-highlight";
-import rehypeSlug from "rehype-slug";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
 
 export interface BlogPost {
   slug: string;
@@ -84,7 +81,7 @@ export function getAllPosts(): BlogPostMeta[] {
     .sort((post1, post2) => (post1.date > post2.date ? -1 : 1));
 
   // Return only metadata, not full content
-  return posts.map(({ content, ...meta }) => meta);
+  return posts.map(({ ...meta }) => meta);
 }
 
 export function getPostsByTag(tag: string): BlogPostMeta[] {
