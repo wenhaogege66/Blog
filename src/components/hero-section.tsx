@@ -28,7 +28,7 @@ export default function HeroSection() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: [0.04, 0.62, 0.23, 0.98] },
+      transition: { duration: 0.6 },
     },
   };
 
@@ -124,7 +124,7 @@ export default function HeroSection() {
           >
             <motion.div
               animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: [0.45, 0, 0.55, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
             >
               <ArrowDown className="w-6 h-6 text-cyan-400" />
             </motion.div>

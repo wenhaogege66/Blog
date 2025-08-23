@@ -41,7 +41,7 @@ export default function AboutSection() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: [0.04, 0.62, 0.23, 0.98] },
+      transition: { duration: 0.6 },
     },
   };
 
