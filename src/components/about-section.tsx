@@ -85,7 +85,7 @@ export default function AboutSection() {
             <div className="relative">
               <div className="w-48 h-48 rounded-full overflow-hidden border-4 border-cyan-500/30 shadow-2xl shadow-cyan-500/20">
                 <Image
-                  src="https://avatars.githubusercontent.com/u/122454977?s=400&u=74539ca783c52d4c0dd9a2f1066ca6d540e92074&v=4"
+                  src="/wenhaogege.jpeg"
                   alt="wenhaogege Profile"
                   width={192}
                   height={192}

@@ -77,17 +77,27 @@ export default function ProjectsSection() {
             <CardContent className="p-0">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
                 {/* Project Image/Preview */}
-                <div className="relative bg-gradient-to-br from-cyan-900/20 to-purple-900/20 p-8 flex items-center justify-center">
-                  <div className="relative">
-                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-purple-500/20 rounded-2xl blur-xl"></div>
-                    <div className="relative w-48 h-48 rounded-2xl bg-transparent flex items-center justify-center">
+                <div className="relative bg-gradient-to-br from-cyan-900/10 via-purple-900/10 to-blue-900/10 p-8 flex items-center justify-center min-h-[400px] overflow-hidden">
+                  {/* Animated background elements */}
+                  <div className="absolute inset-0">
+                    <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl animate-pulse"></div>
+                    <div className="absolute bottom-1/4 right-1/4 w-24 h-24 bg-purple-500/10 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+                    <div className="absolute top-3/4 left-1/2 w-20 h-20 bg-blue-500/10 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+                  </div>
+                  
+                  {/* Main image container */}
+                  <div className="relative z-10 w-full max-w-sm">
+                    <div className="relative bg-gradient-to-br from-white/5 to-white/10 rounded-3xl p-6 backdrop-blur-sm border border-white/20 shadow-2xl">
                       <Image
                         src="/app.avif"
                         alt="Medeo App Screenshot"
-                        width={192}
-                        height={192}
-                        className="w-full h-full object-contain rounded-2xl"
+                        width={300}
+                        height={300}
+                        className="w-full h-auto object-contain rounded-2xl drop-shadow-2xl"
+                        priority
                       />
+                      {/* Glow effect */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-purple-500/20 rounded-3xl blur-xl opacity-50"></div>
                     </div>
                   </div>
                 </div>
