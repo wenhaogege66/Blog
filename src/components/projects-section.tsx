@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Github, Loader2 } from "lucide-react";
+import { Github, Loader2, ExternalLink, Star, Code, Smartphone, Heart } from "lucide-react";
 import ProjectCard from "@/components/project-card";
 import NeonButton from "@/components/ui/neon-button";
 import { fetchGitHubRepos } from "@/lib/github";
+import { Card, CardContent } from "@/components/ui/card";
 
 interface GitHubRepo {
   id: number;
@@ -60,6 +61,123 @@ export default function ProjectsSection() {
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             A showcase of my latest work, open-source contributions, and experiments with cutting-edge technologies.
+          </p>
+        </motion.div>
+
+        {/* Featured Project - Medeo */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="mb-20"
+        >
+          <Card className="border-gradient-to-r border-cyan-500/30 bg-background/50 backdrop-blur-sm overflow-hidden group hover:border-cyan-500/50 transition-all duration-500">
+            <CardContent className="p-0">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
+                {/* Project Image/Preview */}
+                <div className="relative bg-gradient-to-br from-cyan-900/20 to-purple-900/20 p-8 flex items-center justify-center">
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-purple-500/20 rounded-2xl blur-xl"></div>
+                    <div className="relative w-32 h-32 rounded-2xl bg-gradient-to-br from-cyan-400 to-purple-600 flex items-center justify-center">
+                      <Smartphone className="w-16 h-16 text-white" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Project Details */}
+                <div className="p-8">
+                  <div className="flex items-start justify-between mb-4">
+                    <div>
+                      <h3 className="text-2xl font-bold mb-2 bg-gradient-to-r from-cyan-400 to-purple-600 bg-clip-text text-transparent">
+                        Medeo App
+                      </h3>
+                      <p className="text-lg text-cyan-300 mb-2">Healthcare Mobile Application</p>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Star className="w-4 h-4 text-yellow-400" />
+                        <span>Featured Project</span>
+                      </div>
+                    </div>
+                    <a 
+                      href="https://www.medeo.app/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 rounded-full bg-cyan-500/10 hover:bg-cyan-500/20 transition-colors group"
+                    >
+                      <ExternalLink className="w-5 h-5 text-cyan-400 group-hover:scale-110 transition-transform" />
+                    </a>
+                  </div>
+
+                  <p className="text-muted-foreground mb-6 leading-relaxed">
+                    A comprehensive healthcare mobile application that connects patients with healthcare providers, 
+                    enabling secure video consultations, appointment booking, and health record management. 
+                    Built with modern mobile technologies and focused on user experience and data security.
+                  </p>
+
+                  <div className="mb-6">
+                    <h4 className="text-sm font-semibold text-cyan-300 mb-3">Key Features</h4>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Heart className="w-3 h-3 text-red-400" />
+                        Video consultations
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Code className="w-3 h-3 text-cyan-400" />
+                        Secure messaging
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Smartphone className="w-3 h-3 text-purple-400" />
+                        Mobile-first design
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Star className="w-3 h-3 text-yellow-400" />
+                        Health records
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mb-6">
+                    <h4 className="text-sm font-semibold text-cyan-300 mb-3">Technologies</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {["React Native", "Node.js", "Healthcare APIs", "Security", "Mobile UI/UX"].map((tech) => (
+                        <span
+                          key={tech}
+                          className="text-xs bg-purple-500/10 text-purple-300 px-3 py-1 rounded-full border border-purple-500/20"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <a 
+                    href="https://www.medeo.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 font-medium transition-colors"
+                  >
+                    Visit Medeo App
+                    <ExternalLink className="w-4 h-4" />
+                  </a>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+
+        {/* GitHub Projects Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-cyan-400 to-purple-600 bg-clip-text text-transparent">
+            Open Source Projects
+          </h3>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            Explore my contributions to the open source community and personal projects on GitHub.
           </p>
         </motion.div>
 
