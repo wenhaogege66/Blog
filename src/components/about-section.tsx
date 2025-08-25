@@ -4,20 +4,21 @@ import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { GraduationCap, Code, Heart, Zap, Globe, Briefcase, BookOpen, Dumbbell, Gamepad2 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import MagneticHover from "@/components/ui/magnetic-hover";
 import Image from "next/image";
 
 const skills = [
   { name: "Frontend", icon: Code, items: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Three.js"] },
   { name: "Backend", icon: Zap, items: ["Node.js", "Python", "Java", "Spring Boot", "PostgreSQL"] },
-  { name: "Mobile", icon: Globe, items: ["React Native", "Flutter", "iOS Development", "Android"] },
+  { name: "Mobile", icon: Globe, items: ["HarmonyOS", "ArkTS", "React Native", "Flutter", "Android"] },
   { name: "AI & Data", icon: Heart, items: ["Machine Learning", "Data Analysis", "TensorFlow", "PyTorch"] },
 ];
 
 const stats = [
-  { number: "2024", label: "Graduation Year" },
+  { number: "21", label: "Years Old" },
   { number: "ZJU", label: "University" },
+  { number: "2026", label: "Graduation Year" },
   { number: "2+", label: "Internships" },
-  { number: "∞", label: "Learning Mindset" },
 ];
 
 const interests = [
@@ -83,7 +84,7 @@ export default function AboutSection() {
             <div className="relative">
               <div className="w-48 h-48 rounded-full overflow-hidden border-4 border-cyan-500/30 shadow-2xl shadow-cyan-500/20">
                 <Image
-                  src="https://github.com/wenhaogege66.png"
+                  src="https://avatars.githubusercontent.com/u/122454977?s=400&u=74539ca783c52d4c0dd9a2f1066ca6d540e92074&v=4"
                   alt="wenhaogege Profile"
                   width={192}
                   height={192}
@@ -100,13 +101,15 @@ export default function AboutSection() {
             <div className="prose prose-invert max-w-none">
               <p className="text-lg text-muted-foreground leading-relaxed">
                 Hi! I&apos;m <span className="text-cyan-400 font-semibold">Wenhao</span>, 
-                a passionate Software Engineering student at <span className="text-cyan-400 font-semibold">Zhejiang University</span>, 
-                graduating in 2024 and continuing with graduate studies.
+                a passionate 21-year-old Software Engineering student at <span className="text-cyan-400 font-semibold">Zhejiang University</span>. 
+                Enrolled in 2022, I&apos;m set to graduate in 2026 before continuing with graduate studies.
               </p>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                My journey includes valuable internship experiences at <span className="text-cyan-400 font-semibold">Huawei</span> in 2024 
-                and a dynamic 3-month stint at an AI startup in 2025, where I&apos;ve honed my skills in both large-scale 
-                enterprise development and cutting-edge AI applications.
+                My journey includes a rewarding internship at <span className="text-cyan-400 font-semibold">Huawei Technologies</span> in 2024, 
+                where I focused on <span className="text-cyan-400 font-semibold">HarmonyOS</span> development using <span className="text-cyan-400 font-semibold">ArkTS</span>, 
+                contributing to fundamental rendering libraries and testing frameworks. This achievement earned me the 
+                <span className="text-yellow-400 font-semibold">Huawei Elite Class Second-Class Scholarship</span>. 
+                Additionally, I completed a dynamic 3-month stint at an AI startup in 2025, gaining cutting-edge AI/ML experience.
               </p>
               <p className="text-lg text-muted-foreground leading-relaxed">
                 Beyond coding, I&apos;m passionate about fitness, anime (especially Cyberpunk 2077), gaming, investment, 
@@ -161,8 +164,9 @@ export default function AboutSection() {
         >
           {skills.map((skill) => (
             <motion.div key={skill.name} variants={itemVariants}>
-              <Card className="group border-cyan-500/20 bg-background/50 backdrop-blur-sm hover:border-cyan-500/40 transition-all duration-300 h-full">
-                <CardContent className="p-6">
+              <MagneticHover strength={0.2} range={80}>
+                <Card className="group border-cyan-500/20 bg-background/50 backdrop-blur-sm hover:border-cyan-500/40 transition-all duration-300 h-full">
+                  <CardContent className="p-6">
                   <div className="flex items-center gap-3 mb-4">
                     <skill.icon className="w-6 h-6 text-cyan-400" />
                     <h3 className="text-lg font-semibold text-cyan-400">
@@ -179,8 +183,9 @@ export default function AboutSection() {
                       </div>
                     ))}
                   </div>
-                </CardContent>
-              </Card>
+                  </CardContent>
+                </Card>
+              </MagneticHover>
             </motion.div>
           ))}
         </motion.div>
@@ -209,7 +214,8 @@ export default function AboutSection() {
         >
           {interests.map((interest) => (
             <motion.div key={interest.name} variants={itemVariants}>
-              <Card className="group border-purple-500/20 bg-background/50 backdrop-blur-sm hover:border-purple-500/40 transition-all duration-300 h-full text-center">
+              <MagneticHover strength={0.2} range={80}>
+                <Card className="group border-purple-500/20 bg-background/50 backdrop-blur-sm hover:border-purple-500/40 transition-all duration-300 h-full text-center">
                 <CardContent className="p-6">
                   <div className="flex flex-col items-center gap-3">
                     <div className="p-3 rounded-full bg-purple-500/10 border border-purple-500/20">
@@ -223,7 +229,8 @@ export default function AboutSection() {
                     </p>
                   </div>
                 </CardContent>
-              </Card>
+                </Card>
+              </MagneticHover>
             </motion.div>
           ))}
         </motion.div>

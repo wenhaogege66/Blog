@@ -6,7 +6,10 @@ import HeroSection from "@/components/hero-section";
 import AboutSection from "@/components/about-section";
 import ProjectsSection from "@/components/projects-section";
 import BlogSection from "@/components/blog-section";
+import ContactSection from "@/components/contact-section";
 import ParticlesBackground from "@/components/ui/particles-background";
+import CursorTrail from "@/components/ui/cursor-trail";
+import ClickRipple from "@/components/ui/click-ripple";
 import { useEffect, useState } from "react";
 
 // Dynamically import Three.js component to avoid SSR issues
@@ -65,6 +68,10 @@ export default function Home() {
       <ThreeBackground />
       <ParticlesBackground />
       
+      {/* Cursor Effects */}
+      <CursorTrail />
+      <ClickRipple />
+      
       {/* Navigation */}
       <Navigation />
       
@@ -86,14 +93,9 @@ export default function Home() {
           <BlogSection posts={posts} />
         </div>
         
-        <section id="contact" className="min-h-screen flex items-center justify-center">
-          <div className="text-center">
-            <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-              Contact
-            </h2>
-            <p className="text-muted-foreground text-lg">Coming soon...</p>
-          </div>
-        </section>
+        <div id="contact">
+          <ContactSection />
+        </div>
       </main>
     </div>
   );

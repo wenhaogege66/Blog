@@ -29,17 +29,18 @@ const experiences = [
   {
     id: 2,
     company: "Huawei Technologies",
-    position: "Software Development Intern",
+    position: "HarmonyOS Development Intern",
     duration: "2024",
     location: "China",
     type: "Internship",
-    description: "Gained valuable experience in large-scale enterprise software development at one of the world's leading technology companies. Worked on enterprise-grade solutions and learned industry best practices.",
-    technologies: ["Java", "Spring Boot", "Microservices", "Enterprise Systems", "Cloud Computing", "DevOps"],
+    description: "Specialized in HarmonyOS mobile development using ArkTS, focusing on fundamental rendering libraries and comprehensive testing frameworks. Contributed to next-generation mobile operating system development at one of the world's leading technology companies.",
+    technologies: ["HarmonyOS", "ArkTS", "Mobile Development", "Rendering Libraries", "Testing Frameworks", "Enterprise Systems"],
     achievements: [
-      "Developed enterprise-grade software solutions",
-      "Learned large-scale system architecture",
-      "Collaborated with international development teams",
-      "Gained expertise in enterprise development practices"
+      "Developed fundamental ArkTS rendering libraries for HarmonyOS",
+      "Implemented comprehensive testing frameworks for mobile components",
+      "Earned Huawei Elite Class Second-Class Scholarship",
+      "Contributed to next-generation mobile OS development",
+      "Collaborated with international HarmonyOS development teams"
     ],
     icon: Building,
     color: "from-cyan-500 to-blue-500",
@@ -50,13 +51,14 @@ const experiences = [
 const education = {
   institution: "Zhejiang University",
   degree: "Software Engineering",
-  status: "Bachelor's 2024 → Master's (Continuing)",
+  status: "2022-2026 Bachelor's → Master's (Continuing)",
   location: "Hangzhou, China",
-  description: "One of China's top universities, renowned for engineering and technology programs. Continuing with graduate studies to deepen expertise in software engineering and computer science.",
+  description: "One of China's top universities, renowned for engineering and technology programs. Enrolled in 2022, set to graduate in 2026 before continuing with graduate studies to deepen expertise in software engineering and computer science.",
   achievements: [
     "Strong foundation in software engineering principles",
-    "Advanced coursework in algorithms and data structures",
-    "Active in university tech communities",
+    "Advanced coursework in algorithms and data structures", 
+    "Active in Qizhen Cross-disciplinary Innovation Lab (Xlab)",
+    "Awarded Zhejiang University Computer Science Campus Star",
     "Continuing with graduate studies for deeper specialization"
   ]
 };
