@@ -5,6 +5,7 @@ import { useInView } from "react-intersection-observer";
 import { GraduationCap, Code, Heart, Zap, Globe, Briefcase, BookOpen, Dumbbell, Gamepad2 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import MagneticHover from "@/components/ui/magnetic-hover";
+import TechIcon from "@/components/ui/tech-icon";
 import Image from "next/image";
 
 const skills = [
@@ -173,13 +174,14 @@ export default function AboutSection() {
                       {skill.name}
                     </h3>
                   </div>
-                  <div className="space-y-2">
+                  <div className="grid grid-cols-2 gap-3">
                     {skill.items.map((item) => (
                       <div
                         key={item}
-                        className="text-sm text-muted-foreground bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/20"
+                        className="flex items-center gap-2 text-sm text-muted-foreground bg-cyan-500/10 px-3 py-2 rounded-lg border border-cyan-500/20 hover:bg-cyan-500/20 transition-colors"
                       >
-                        {item}
+                        <TechIcon name={item} className="w-4 h-4 flex-shrink-0" />
+                        <span className="truncate">{item}</span>
                       </div>
                     ))}
                   </div>

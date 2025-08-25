@@ -7,6 +7,7 @@ import ProjectCard from "@/components/project-card";
 import NeonButton from "@/components/ui/neon-button";
 import { fetchGitHubRepos } from "@/lib/github";
 import { Card, CardContent } from "@/components/ui/card";
+import Image from "next/image";
 
 interface GitHubRepo {
   id: number;
@@ -79,8 +80,14 @@ export default function ProjectsSection() {
                 <div className="relative bg-gradient-to-br from-cyan-900/20 to-purple-900/20 p-8 flex items-center justify-center">
                   <div className="relative">
                     <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-purple-500/20 rounded-2xl blur-xl"></div>
-                    <div className="relative w-32 h-32 rounded-2xl bg-gradient-to-br from-cyan-400 to-purple-600 flex items-center justify-center">
-                      <Smartphone className="w-16 h-16 text-white" />
+                    <div className="relative w-48 h-48 rounded-2xl bg-transparent flex items-center justify-center">
+                      <Image
+                        src="/app.avif"
+                        alt="Medeo App Screenshot"
+                        width={192}
+                        height={192}
+                        className="w-full h-full object-contain rounded-2xl"
+                      />
                     </div>
                   </div>
                 </div>
@@ -92,7 +99,7 @@ export default function ProjectsSection() {
                       <h3 className="text-2xl font-bold mb-2 bg-gradient-to-r from-cyan-400 to-purple-600 bg-clip-text text-transparent">
                         Medeo App
                       </h3>
-                      <p className="text-lg text-cyan-300 mb-2">Healthcare Mobile Application</p>
+                      <p className="text-lg text-cyan-300 mb-2">AI Video Generation & Editing Tool</p>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Star className="w-4 h-4 text-yellow-400" />
                         <span>Featured Project</span>
@@ -109,9 +116,9 @@ export default function ProjectsSection() {
                   </div>
 
                   <p className="text-muted-foreground mb-6 leading-relaxed">
-                    A comprehensive healthcare mobile application that connects patients with healthcare providers, 
-                    enabling secure video consultations, appointment booking, and health record management. 
-                    Built with modern mobile technologies and focused on user experience and data security.
+                    An innovative AI-powered video generation and editing platform that leverages cutting-edge artificial intelligence 
+                    to create, enhance, and edit videos. Features intelligent scene generation, automated editing workflows, 
+                    and advanced AI-driven video enhancement capabilities for content creators and professionals.
                   </p>
 
                   <div className="mb-6">
@@ -119,19 +126,19 @@ export default function ProjectsSection() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Heart className="w-3 h-3 text-red-400" />
-                        Video consultations
+                        AI Video Generation
                       </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Code className="w-3 h-3 text-cyan-400" />
-                        Secure messaging
+                        Smart Editing Tools
                       </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Smartphone className="w-3 h-3 text-purple-400" />
-                        Mobile-first design
+                        Scene Generation
                       </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Star className="w-3 h-3 text-yellow-400" />
-                        Health records
+                        AI Enhancement
                       </div>
                     </div>
                   </div>
@@ -139,7 +146,7 @@ export default function ProjectsSection() {
                   <div className="mb-6">
                     <h4 className="text-sm font-semibold text-cyan-300 mb-3">Technologies</h4>
                     <div className="flex flex-wrap gap-2">
-                      {["React Native", "Node.js", "Healthcare APIs", "Security", "Mobile UI/UX"].map((tech) => (
+                      {["AI/ML", "Computer Vision", "Video Processing", "React", "Python", "Machine Learning"].map((tech) => (
                         <span
                           key={tech}
                           className="text-xs bg-purple-500/10 text-purple-300 px-3 py-1 rounded-full border border-purple-500/20"

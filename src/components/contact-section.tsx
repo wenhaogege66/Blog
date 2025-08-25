@@ -101,50 +101,79 @@ export default function ContactSection() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-16">
-          {/* Contact Methods */}
+        {/* Contact Methods Grid */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          className="mb-16"
+        >
+          <h3 className="text-2xl font-bold mb-8 text-center bg-gradient-to-r from-cyan-400 to-purple-600 bg-clip-text text-transparent">
+            Get In Touch
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {contactMethods.map((method) => (
+              <motion.div key={method.name} variants={itemVariants}>
+                <MagneticHover strength={0.15} range={50}>
+                  <Card className={`${method.borderColor} bg-background/50 backdrop-blur-sm transition-all duration-300 h-full`}>
+                    <CardContent className="p-8 text-center">
+                      <div className={`w-16 h-16 mx-auto mb-4 p-4 rounded-full ${method.bgColor} border ${method.borderColor.split(' ')[0]}`}>
+                        <method.icon className="w-full h-full text-current" />
+                      </div>
+                      <h4 className="text-xl font-semibold mb-3 text-cyan-400">
+                        {method.name}
+                      </h4>
+                      <p className="text-sm text-muted-foreground mb-6 leading-relaxed">
+                        {method.description}
+                      </p>
+                      <NeonButton
+                        href={method.href}
+                        variant="secondary"
+                        className="text-sm w-full justify-center"
+                      >
+                        {method.value}
+                        <ExternalLink className="w-3 h-3 ml-2 flex-shrink-0" />
+                      </NeonButton>
+                    </CardContent>
+                  </Card>
+                </MagneticHover>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+          {/* WeChat QR & Xlab Info */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
-            className="lg:col-span-2"
+            className="space-y-8"
           >
-            <h3 className="text-2xl font-bold mb-8 bg-gradient-to-r from-cyan-400 to-purple-600 bg-clip-text text-transparent">
-              Get In Touch
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {contactMethods.map((method) => (
-                <motion.div key={method.name} variants={itemVariants}>
-                  <MagneticHover strength={0.2} range={60}>
-                    <Card className={`${method.borderColor} bg-background/50 backdrop-blur-sm transition-all duration-300 h-full`}>
-                      <CardContent className="p-6">
-                        <div className="flex items-start gap-4">
-                          <div className={`p-3 rounded-full ${method.bgColor} border ${method.borderColor.split(' ')[0]}`}>
-                            <method.icon className="w-6 h-6 text-current" />
-                          </div>
-                          <div className="flex-1">
-                            <h4 className="text-lg font-semibold mb-2">
-                              {method.name}
-                            </h4>
-                            <p className="text-sm text-muted-foreground mb-3">
-                              {method.description}
-                            </p>
-                            <NeonButton
-                              href={method.href}
-                              variant="secondary"
-                              className="text-sm"
-                            >
-                              {method.value}
-                              <ExternalLink className="w-3 h-3 ml-2" />
-                            </NeonButton>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </MagneticHover>
-                </motion.div>
-              ))}
-            </div>
+            {/* WeChat QR Code */}
+            <motion.div variants={itemVariants}>
+              <MagneticHover strength={0.15} range={40}>
+                <Card className="border-green-500/20 bg-background/50 backdrop-blur-sm hover:border-green-500/40 transition-all duration-300 text-center h-full">
+                  <CardContent className="p-8">
+                    <h4 className="text-xl font-semibold mb-6 text-green-400">
+                      WeChat QR Code
+                    </h4>
+                    <div className="relative mx-auto w-40 h-40 mb-6">
+                      <Image
+                        src="/Qr_code.jpg"
+                        alt="WeChat QR Code"
+                        width={160}
+                        height={160}
+                        className="w-full h-full object-cover rounded-lg border border-green-500/20"
+                      />
+                    </div>
+                    <p className="text-sm text-muted-foreground">
+                      Scan to add me on WeChat for casual conversations
+                    </p>
+                  </CardContent>
+                </Card>
+              </MagneticHover>
+            </motion.div>
           </motion.div>
 
           {/* WeChat QR & Xlab Info */}
@@ -184,23 +213,30 @@ export default function ContactSection() {
               <MagneticHover strength={0.15} range={40}>
                 <Card className="border-cyan-500/20 bg-background/50 backdrop-blur-sm hover:border-cyan-500/40 transition-all duration-300 text-center">
                   <CardContent className="p-6">
-                    <div className="flex items-center justify-center gap-3 mb-4">
-                      <Image
-                        src="/Xlab.png"
-                        alt="Xlab Logo"
-                        width={32}
-                        height={32}
-                        className="w-8 h-8"
-                      />
-                      <h4 className="text-lg font-semibold text-cyan-400">
-                        Xlab Member
-                      </h4>
+                    <div className="flex items-center justify-center mb-6">
+                      <div className="relative w-32 h-12">
+                        <Image
+                          src="/Xlab.png"
+                          alt="Xlab Logo"
+                          width={128}
+                          height={48}
+                          className="w-full h-full object-contain"
+                        />
+                      </div>
                     </div>
-                    <p className="text-sm text-muted-foreground">
+                    <h4 className="text-xl font-semibold text-cyan-400 mb-2">
+                      Software Team Lead
+                    </h4>
+                    <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
                       Qizhen Cross-disciplinary Innovation &amp; Entrepreneurship Lab
                     </p>
-                    <div className="mt-3 text-xs text-muted-foreground">
+                    <div className="text-sm text-cyan-300 font-medium">
                       Zhejiang University
+                    </div>
+                    <div className="mt-4 pt-4 border-t border-cyan-500/20">
+                      <p className="text-xs text-muted-foreground">
+                        Leading software development initiatives and cross-disciplinary innovation projects
+                      </p>
                     </div>
                   </CardContent>
                 </Card>
