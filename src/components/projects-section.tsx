@@ -7,7 +7,7 @@ import ProjectCard from "@/components/project-card";
 import NeonButton from "@/components/ui/neon-button";
 import { fetchGitHubRepos } from "@/lib/github";
 import { Card, CardContent } from "@/components/ui/card";
-import Image from "next/image";
+import LazyImage from "@/components/ui/lazy-image";
 
 interface GitHubRepo {
   id: number;
@@ -77,7 +77,7 @@ export default function ProjectsSection() {
             <CardContent className="p-0">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
                 {/* Project Image/Preview */}
-                <div className="relative bg-gradient-to-br from-cyan-900/10 via-purple-900/10 to-blue-900/10 p-8 flex items-center justify-center min-h-[400px] overflow-hidden">
+                <div className="relative bg-gradient-to-br from-cyan-900/10 via-purple-900/10 to-blue-900/10 p-4 sm:p-8 flex items-center justify-center min-h-[300px] sm:min-h-[400px] overflow-hidden">
                   {/* Animated background elements */}
                   <div className="absolute inset-0">
                     <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl animate-pulse"></div>
@@ -86,15 +86,16 @@ export default function ProjectsSection() {
                   </div>
                   
                   {/* Main image container */}
-                  <div className="relative z-10 w-full max-w-lg">
-                    <div className="relative bg-gradient-to-br from-white/5 to-white/10 rounded-3xl p-8 backdrop-blur-sm border border-white/20 shadow-2xl">
-                      <Image
+                  <div className="relative z-10 w-full max-w-xs sm:max-w-lg">
+                    <div className="relative bg-gradient-to-br from-white/5 to-white/10 rounded-3xl p-4 sm:p-8 backdrop-blur-sm border border-white/20 shadow-2xl">
+                      <LazyImage
                         src="/app.avif"
                         alt="Medeo App Screenshot"
                         width={400}
                         height={400}
                         className="w-full h-auto object-contain rounded-2xl drop-shadow-2xl"
                         priority
+                        unoptimized
                       />
                       {/* Glow effect */}
                       <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-purple-500/20 rounded-3xl blur-xl opacity-50"></div>
@@ -103,10 +104,10 @@ export default function ProjectsSection() {
                 </div>
 
                 {/* Project Details */}
-                <div className="p-8">
-                  <div className="flex items-start justify-between mb-4">
+                <div className="p-4 sm:p-8">
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4 gap-3">
                     <div>
-                      <h3 className="text-2xl font-bold mb-2 bg-gradient-to-r from-cyan-400 to-purple-600 bg-clip-text text-transparent">
+                      <h3 className="text-xl sm:text-2xl font-bold mb-2 bg-gradient-to-r from-cyan-400 to-purple-600 bg-clip-text text-transparent">
                         Medeo App
                       </h3>
                       <p className="text-lg text-cyan-300 mb-2">AI Video Generation & Editing Tool</p>

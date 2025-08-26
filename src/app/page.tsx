@@ -10,6 +10,8 @@ import ContactSection from "@/components/contact-section";
 import ParticlesBackground from "@/components/ui/particles-background";
 import CursorTrail from "@/components/ui/cursor-trail";
 import ClickRipple from "@/components/ui/click-ripple";
+import SmoothScroll from "@/components/ui/smooth-scroll";
+import BackToTop from "@/components/ui/back-to-top";
 import { useEffect, useState } from "react";
 
 // Dynamically import Three.js component to avoid SSR issues
@@ -97,6 +99,10 @@ export default function Home() {
           <ContactSection />
         </div>
       </main>
+      
+      {/* UI Enhancements */}
+      <SmoothScroll />
+      <BackToTop />
     </div>
   );
 }

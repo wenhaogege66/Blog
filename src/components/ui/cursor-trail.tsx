@@ -1,112 +1,336 @@
 "use client";
 
 import { useEffect, useState, useCallback, useRef } from "react";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 
 interface TrailPoint {
   x: number;
   y: number;
   id: number;
+  timestamp: number;
+}
+
+interface ClickParticle {
+  x: number;
+  y: number;
+  id: number;
+  vx: number;
+  vy: number;
+  life: number;
 }
 
 export default function CursorTrail() {
   const [trail, setTrail] = useState<TrailPoint[]>([]);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
+  const [clickParticles, setClickParticles] = useState<ClickParticle[]>([]);
+  const [lastClick, setLastClick] = useState<{ x: number; y: number } | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  
+  // Smooth cursor following with springs
+  const cursorX = useSpring(mouseX, { stiffness: 600, damping: 30 });
+  const cursorY = useSpring(mouseY, { stiffness: 600, damping: 30 });
+  
   const animationFrameRef = useRef<number | undefined>(undefined);
   const lastTimeRef = useRef<number>(0);
-  const THROTTLE_DELAY = 8; // ~120fps, more responsive than 16ms
-
+  const particleAnimationRef = useRef<number | undefined>(undefined);
+  
+  // Enhanced mouse move handler with electromagnetic effect
   const handleMouseMove = useCallback((e: MouseEvent) => {
     const now = performance.now();
-    if (now - lastTimeRef.current < THROTTLE_DELAY) return;
+    if (now - lastTimeRef.current < 6) return; // ~165fps for ultra smooth
     
     lastTimeRef.current = now;
+    
+    mouseX.set(e.clientX);
+    mouseY.set(e.clientY);
     
     if (animationFrameRef.current) {
       cancelAnimationFrame(animationFrameRef.current);
     }
     
     animationFrameRef.current = requestAnimationFrame(() => {
-      setMousePos({ x: e.clientX, y: e.clientY });
-      
       const newPoint: TrailPoint = {
         x: e.clientX,
         y: e.clientY,
-        id: now, // Use performance timestamp for better uniqueness
+        id: now,
+        timestamp: now,
       };
 
       setTrail(prev => {
-        const updatedTrail = [newPoint, ...prev.slice(0, 11)]; // Reduced to 12 points for better performance
+        const updatedTrail = [newPoint, ...prev.slice(0, 15)]; // More trail points for smoother effect
         return updatedTrail;
       });
     });
+  }, [mouseX, mouseY]);
+
+  // Click particle burst effect
+  const handleClick = useCallback((e: MouseEvent) => {
+    setLastClick({ x: e.clientX, y: e.clientY });
+    
+    const particleCount = 12;
+    const newParticles: ClickParticle[] = [];
+    
+    for (let i = 0; i < particleCount; i++) {
+      const angle = (i / particleCount) * Math.PI * 2;
+      const velocity = 50 + Math.random() * 100;
+      newParticles.push({
+        x: e.clientX,
+        y: e.clientY,
+        id: performance.now() + i,
+        vx: Math.cos(angle) * velocity,
+        vy: Math.sin(angle) * velocity,
+        life: 1,
+      });
+    }
+    
+    setClickParticles(prev => [...prev, ...newParticles]);
   }, []);
 
+  // Hover detection for interactive elements
+  const handleMouseOver = useCallback((e: MouseEvent) => {
+    const target = e.target as Element;
+    const isInteractive = target.closest('a, button, [role="button"], input, textarea, select');
+    setIsHovering(!!isInteractive);
+  }, []);
+
+  // Animate click particles
   useEffect(() => {
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    const animateParticles = () => {
+      setClickParticles(prev => {
+        return prev.map(particle => ({
+          ...particle,
+          x: particle.x + particle.vx * 0.02,
+          y: particle.y + particle.vy * 0.02,
+          vx: particle.vx * 0.98, // Friction
+          vy: particle.vy * 0.98,
+          life: particle.life - 0.03,
+        })).filter(particle => particle.life > 0);
+      });
+      
+      particleAnimationRef.current = requestAnimationFrame(animateParticles);
+    };
+    
+    if (clickParticles.length > 0) {
+      particleAnimationRef.current = requestAnimationFrame(animateParticles);
+    }
+    
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
+      if (particleAnimationRef.current) {
+        cancelAnimationFrame(particleAnimationRef.current);
       }
     };
-  }, [handleMouseMove]);
+  }, [clickParticles.length]);
+
+  useEffect(() => {
+    // Detect mobile devices
+    const checkMobile = () => {
+      const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
+        || window.innerWidth <= 768 
+        || ('ontouchstart' in window);
+      setIsMobile(isMobileDevice);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    if (!isMobile) {
+      const options = { passive: true };
+      
+      window.addEventListener("mousemove", handleMouseMove, options);
+      window.addEventListener("mouseover", handleMouseOver, options);
+      window.addEventListener("click", handleClick, options);
+      
+      return () => {
+        window.removeEventListener("mousemove", handleMouseMove);
+        window.removeEventListener("mouseover", handleMouseOver);
+        window.removeEventListener("click", handleClick);
+        window.removeEventListener('resize', checkMobile);
+        
+        if (animationFrameRef.current) {
+          cancelAnimationFrame(animationFrameRef.current);
+        }
+        if (particleAnimationRef.current) {
+          cancelAnimationFrame(particleAnimationRef.current);
+        }
+      };
+    } else {
+      return () => {
+        window.removeEventListener('resize', checkMobile);
+      };
+    }
+  }, [handleMouseMove, handleMouseOver, handleClick, isMobile]);
+
+  // Don't render cursor effects on mobile devices
+  if (isMobile) {
+    return null;
+  }
 
   return (
     <>
-      {/* Main cursor glow */}
+      {/* Main cursor core with electromagnetic field */}
       <motion.div
-        className="fixed pointer-events-none z-50 will-change-transform"
+        className="fixed pointer-events-none z-50 will-change-transform mix-blend-difference"
         style={{
-          x: mousePos.x - 10,
-          y: mousePos.y - 10,
+          x: cursorX,
+          y: cursorY,
         }}
-        transition={{ type: "spring", stiffness: 800, damping: 35 }}
       >
-        <div className="w-5 h-5 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 opacity-80 blur-sm transform-gpu"></div>
+        <div className="relative">
+          {/* Core dot */}
+          <motion.div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1 h-1 rounded-full bg-white"
+            animate={isHovering ? { scale: 2 } : { scale: 1 }}
+            transition={{ duration: 0.2 }}
+          />
+          
+          {/* Electromagnetic rings */}
+          <motion.div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+            animate={{
+              rotate: 360,
+              scale: isHovering ? 1.5 : 1,
+            }}
+            transition={{
+              rotate: { duration: 8, repeat: Infinity, ease: "linear" },
+              scale: { duration: 0.3 }
+            }}
+          >
+            <div className="w-8 h-8 border border-cyan-400/40 rounded-full" />
+          </motion.div>
+          
+          <motion.div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+            animate={{
+              rotate: -360,
+              scale: isHovering ? 1.8 : 1.2,
+            }}
+            transition={{
+              rotate: { duration: 12, repeat: Infinity, ease: "linear" },
+              scale: { duration: 0.3 }
+            }}
+          >
+            <div className="w-12 h-12 border border-purple-400/20 rounded-full" />
+          </motion.div>
+          
+          {/* Hover pulse effect */}
+          {isHovering && (
+            <motion.div
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+              initial={{ scale: 0, opacity: 1 }}
+              animate={{ scale: 2, opacity: 0 }}
+              transition={{ duration: 0.6, repeat: Infinity }}
+            >
+              <div className="w-16 h-16 border-2 border-cyan-400/60 rounded-full" />
+            </motion.div>
+          )}
+        </div>
       </motion.div>
 
-      {/* Cursor ring */}
-      <motion.div
-        className="fixed pointer-events-none z-50 will-change-transform"
-        style={{
-          x: mousePos.x - 20,
-          y: mousePos.y - 20,
-        }}
-        transition={{ type: "spring", stiffness: 400, damping: 32 }}
-      >
-        <div className="w-10 h-10 rounded-full border-2 border-cyan-400/30 bg-transparent transform-gpu"></div>
-      </motion.div>
-
-      {/* Trail points */}
+      {/* Quantum trail particles */}
       {trail.map((point, index) => {
-        const opacity = 1 - (index / trail.length);
-        const scale = 1 - (index / trail.length) * 0.4;
-        const glowIntensity = Math.max(0, 6 - index * 0.5);
+        const opacity = Math.max(0, 1 - (index / trail.length));
+        const scale = Math.max(0.2, 1 - (index / trail.length) * 0.6);
+        const hue = 180 + (index * 15) % 180; // Cyan to purple spectrum
         
         return (
           <motion.div
             key={point.id}
             className="fixed pointer-events-none z-40 will-change-transform"
-            style={{
-              x: point.x - 2,
-              y: point.y - 2,
-              opacity,
+            initial={{ scale: 0, opacity: 1 }}
+            animate={{ 
               scale,
+              opacity,
+              rotate: index * 45,
             }}
-            transition={{ duration: 0.15, ease: "easeOut" }}
+            style={{
+              x: point.x - 3,
+              y: point.y - 3,
+            }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
           >
             <div 
-              className="w-1 h-1 rounded-full bg-gradient-to-r from-cyan-400 to-purple-500 transform-gpu"
+              className="w-1.5 h-1.5 rounded-full transform-gpu"
               style={{
-                boxShadow: `0 0 ${glowIntensity}px rgba(34, 211, 238, ${opacity * 0.8})`,
+                background: `hsl(${hue}, 70%, 60%)`,
+                boxShadow: `
+                  0 0 ${4 + index * 0.5}px hsl(${hue}, 70%, 60%, ${opacity * 0.8}),
+                  0 0 ${8 + index * 1}px hsl(${hue}, 70%, 60%, ${opacity * 0.4})
+                `,
               }}
-            ></div>
+            />
           </motion.div>
         );
       })}
 
-      {/* Particle burst on click */}
+      {/* Click burst particles */}
+      {clickParticles.map((particle) => (
+        <motion.div
+          key={particle.id}
+          className="fixed pointer-events-none z-45 will-change-transform"
+          style={{
+            x: particle.x - 2,
+            y: particle.y - 2,
+          }}
+        >
+          <motion.div
+            className="w-1 h-1 rounded-full bg-gradient-to-r from-cyan-400 to-purple-500"
+            style={{
+              opacity: particle.life,
+              scale: particle.life,
+              boxShadow: `0 0 ${particle.life * 8}px rgba(34, 211, 238, ${particle.life * 0.8})`,
+            }}
+          />
+        </motion.div>
+      ))}
+
+      {/* Click ripple effect */}
+      {lastClick && (
+        <motion.div
+          className="fixed pointer-events-none z-40"
+          style={{
+            x: lastClick.x - 25,
+            y: lastClick.y - 25,
+          }}
+          initial={{ scale: 0, opacity: 0.6 }}
+          animate={{ scale: 3, opacity: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          onAnimationComplete={() => setLastClick(null)}
+        >
+          <div className="w-12 h-12 border-2 border-cyan-400/60 rounded-full" />
+        </motion.div>
+      )}
+
+      {/* Background electromagnetic distortion */}
+      <div className="fixed inset-0 pointer-events-none z-10">
+        {trail.slice(0, 5).map((point, index) => (
+          <motion.div
+            key={`bg-${point.id}`}
+            className="absolute"
+            style={{
+              x: point.x - 100,
+              y: point.y - 100,
+            }}
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ 
+              scale: 1 - index * 0.2,
+              opacity: 0.05 - index * 0.01,
+            }}
+            transition={{ duration: 1, ease: "easeOut" }}
+          >
+            <div 
+              className="w-48 h-48 rounded-full blur-3xl transform-gpu"
+              style={{
+                background: `radial-gradient(circle, rgba(34, 211, 238, ${0.1 - index * 0.02}) 0%, transparent 70%)`,
+              }}
+            />
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Hide default cursor */}
       <style jsx global>{`
         * {
           cursor: none !important;

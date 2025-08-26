@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import ThemeToggle from "@/components/ui/theme-toggle";
 
 const navItems = [
   { name: "Home", href: "#home" },
@@ -64,6 +65,15 @@ export default function Navigation() {
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-cyan-400 group-hover:w-full transition-all duration-300" />
               </motion.a>
             ))}
+            
+            {/* Theme Toggle */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3, delay: navItems.length * 0.1 }}
+            >
+              <ThemeToggle />
+            </motion.div>
           </div>
 
           {/* Mobile menu button */}
@@ -102,6 +112,22 @@ export default function Navigation() {
                 {item.name}
               </motion.a>
             ))}
+            
+            {/* Mobile Theme Toggle */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{
+                opacity: isOpen ? 1 : 0,
+                x: isOpen ? 0 : -20,
+              }}
+              transition={{ duration: 0.3, delay: navItems.length * 0.1 }}
+              className="pt-4 border-t border-cyan-500/20"
+            >
+              <div className="flex items-center justify-between">
+                <span className="text-foreground/80 font-medium">Theme</span>
+                <ThemeToggle />
+              </div>
+            </motion.div>
           </div>
         </motion.div>
       </div>
