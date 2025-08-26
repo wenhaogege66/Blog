@@ -86,13 +86,13 @@ export default function ProjectsSection() {
                   </div>
                   
                   {/* Main image container */}
-                  <div className="relative z-10 w-full max-w-xs sm:max-w-lg">
-                    <div className="relative bg-gradient-to-br from-white/5 to-white/10 rounded-3xl p-4 sm:p-8 backdrop-blur-sm border border-white/20 shadow-2xl">
+                  <div className="relative z-10 w-full max-w-sm sm:max-w-xl lg:max-w-2xl">
+                    <div className="relative bg-gradient-to-br from-white/5 to-white/10 rounded-3xl p-4 sm:p-6 lg:p-8 backdrop-blur-sm border border-white/20 shadow-2xl">
                       <LazyImage
                         src="/app.avif"
                         alt="Medeo App Screenshot"
-                        width={400}
-                        height={400}
+                        width={600}
+                        height={600}
                         className="w-full h-auto object-contain rounded-2xl drop-shadow-2xl"
                         priority
                         unoptimized

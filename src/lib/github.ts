@@ -12,6 +12,7 @@ interface GitHubRepo {
   created_at: string;
   updated_at: string;
   pushed_at: string;
+  fork: boolean;
 }
 
 interface GitHubUser {
@@ -43,93 +44,52 @@ export async function fetchGitHubUser(): Promise<GitHubUser> {
   return response.json();
 }
 
-// Fallback static data for when API fails
+// Minimal fallback - we want to show real projects from GitHub API only
 const FALLBACK_REPOS: GitHubRepo[] = [
-  {
-    id: 1,
-    name: "Personal-Blog",
-    full_name: "wenhaogege66/Personal-Blog",
-    description: "Modern personal blog built with Next.js 14, TypeScript, and cutting-edge UI animations",
-    html_url: "https://github.com/wenhaogege66/Personal-Blog",
-    homepage: "https://wenhaogege.dpdns.org",
-    topics: ["nextjs", "typescript", "blog", "framer-motion", "tailwindcss"],
-    stargazers_count: 12,
-    forks_count: 3,
-    language: "TypeScript",
-    created_at: "2024-01-01T00:00:00Z",
-    updated_at: "2025-01-22T00:00:00Z",
-    pushed_at: "2025-01-22T00:00:00Z"
-  },
-  {
-    id: 2,
-    name: "HarmonyOS-Renderer",
-    full_name: "wenhaogege66/HarmonyOS-Renderer",
-    description: "ArkTS-based rendering library for HarmonyOS applications - Huawei internship project",
-    html_url: "https://github.com/wenhaogege66/HarmonyOS-Renderer",
-    homepage: null,
-    topics: ["harmonyos", "arkts", "rendering", "mobile", "huawei"],
-    stargazers_count: 8,
-    forks_count: 2,
-    language: "TypeScript",
-    created_at: "2024-06-01T00:00:00Z",
-    updated_at: "2024-12-01T00:00:00Z",
-    pushed_at: "2024-12-01T00:00:00Z"
-  },
-  {
-    id: 3,
-    name: "AI-ML-Toolkit",
-    full_name: "wenhaogege66/AI-ML-Toolkit",
-    description: "Machine learning toolkit and utilities developed during AI startup internship",
-    html_url: "https://github.com/wenhaogege66/AI-ML-Toolkit",
-    homepage: null,
-    topics: ["python", "machine-learning", "ai", "tensorflow", "pytorch"],
-    stargazers_count: 15,
-    forks_count: 5,
-    language: "Python",
-    created_at: "2024-08-01T00:00:00Z",
-    updated_at: "2025-01-15T00:00:00Z",
-    pushed_at: "2025-01-15T00:00:00Z"
-  },
-  {
-    id: 4,
-    name: "Xlab-Innovation-Platform",
-    full_name: "wenhaogege66/Xlab-Innovation-Platform",
-    description: "Cross-disciplinary innovation platform for Zhejiang University Xlab - Software Team Lead project",
-    html_url: "https://github.com/wenhaogege66/Xlab-Innovation-Platform",
-    homepage: null,
-    topics: ["react", "nodejs", "innovation", "education", "collaboration"],
-    stargazers_count: 6,
-    forks_count: 1,
-    language: "JavaScript",
-    created_at: "2023-09-01T00:00:00Z",
-    updated_at: "2024-11-01T00:00:00Z",
-    pushed_at: "2024-11-01T00:00:00Z"
-  }
+  // Empty - rely on real GitHub API data only
 ];
 
 export async function fetchGitHubRepos(): Promise<GitHubRepo[]> {
   try {
     const response = await fetch(
-      `${GITHUB_API_BASE}/users/${GITHUB_USERNAME}/repos?sort=pushed&direction=desc&per_page=12`,
+      `${GITHUB_API_BASE}/users/${GITHUB_USERNAME}/repos?type=public&sort=updated&per_page=20`,
       {
         next: { revalidate: 3600 }, // Cache for 1 hour
+        headers: {
+          'Accept': 'application/vnd.github.v3+json',
+          'User-Agent': 'wenhaogege-blog'
+        }
       }
     );
 
     if (!response.ok) {
-      // If rate limited or other API error, return fallback data
-      console.warn(`GitHub API failed: ${response.statusText}. Using fallback data.`);
+      console.warn(`GitHub API failed: ${response.status} ${response.statusText}`);
       return FALLBACK_REPOS;
     }
 
     const repos = await response.json();
+    console.log(`Fetched ${repos.length} repositories from GitHub API`);
     
-    // Filter out forks and sort by stars
+    // Filter and sort for meaningful projects
     return repos
-      .filter((repo: GitHubRepo) => !repo.name.includes("fork"))
-      .sort((a: GitHubRepo, b: GitHubRepo) => b.stargazers_count - a.stargazers_count);
+      .filter((repo: GitHubRepo) => 
+        !repo.fork && // Not a fork
+        repo.description && // Has description
+        repo.name !== GITHUB_USERNAME && // Not profile README
+        !repo.name.toLowerCase().includes('test') && // Not test repos
+        !repo.name.toLowerCase().includes('demo') // Not demo repos
+      )
+      .sort((a: GitHubRepo, b: GitHubRepo) => {
+        // Sort by activity (last push) then by stars
+        const dateDiff = new Date(b.pushed_at).getTime() - new Date(a.pushed_at).getTime();
+        if (Math.abs(dateDiff) < 30 * 24 * 60 * 60 * 1000) { // If within 30 days, sort by stars
+          return b.stargazers_count - a.stargazers_count;
+        }
+        return dateDiff;
+      })
+      .slice(0, 6); // Show top 6 repositories
   } catch (error) {
-    console.warn('GitHub API request failed, using fallback data:', error);
+    console.warn('GitHub API request failed:', error);
     return FALLBACK_REPOS;
   }
 }

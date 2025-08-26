@@ -29,9 +29,9 @@ export default function CursorTrail() {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   
-  // Smooth cursor following with springs
-  const cursorX = useSpring(mouseX, { stiffness: 600, damping: 30 });
-  const cursorY = useSpring(mouseY, { stiffness: 600, damping: 30 });
+  // Smooth cursor following with springs - faster response
+  const cursorX = useSpring(mouseX, { stiffness: 1000, damping: 40 });
+  const cursorY = useSpring(mouseY, { stiffness: 1000, damping: 40 });
   
   const animationFrameRef = useRef<number | undefined>(undefined);
   const lastTimeRef = useRef<number>(0);
@@ -40,7 +40,7 @@ export default function CursorTrail() {
   // Enhanced mouse move handler with electromagnetic effect
   const handleMouseMove = useCallback((e: MouseEvent) => {
     const now = performance.now();
-    if (now - lastTimeRef.current < 6) return; // ~165fps for ultra smooth
+    if (now - lastTimeRef.current < 16) return; // ~60fps for better performance
     
     lastTimeRef.current = now;
     
@@ -60,7 +60,7 @@ export default function CursorTrail() {
       };
 
       setTrail(prev => {
-        const updatedTrail = [newPoint, ...prev.slice(0, 15)]; // More trail points for smoother effect
+        const updatedTrail = [newPoint, ...prev.slice(0, 12)]; // Reduced for better performance
         return updatedTrail;
       });
     });
@@ -96,7 +96,7 @@ export default function CursorTrail() {
     setIsHovering(!!isInteractive);
   }, []);
 
-  // Animate click particles
+  // Animate click particles and fade trail
   useEffect(() => {
     const animateParticles = () => {
       setClickParticles(prev => {
@@ -110,19 +110,21 @@ export default function CursorTrail() {
         })).filter(particle => particle.life > 0);
       });
       
+      // Auto-fade trail points after some time
+      const now = performance.now();
+      setTrail(prev => prev.filter(point => now - point.timestamp < 800)); // Remove points older than 800ms
+      
       particleAnimationRef.current = requestAnimationFrame(animateParticles);
     };
     
-    if (clickParticles.length > 0) {
-      particleAnimationRef.current = requestAnimationFrame(animateParticles);
-    }
+    particleAnimationRef.current = requestAnimationFrame(animateParticles);
     
     return () => {
       if (particleAnimationRef.current) {
         cancelAnimationFrame(particleAnimationRef.current);
       }
     };
-  }, [clickParticles.length]);
+  }, [clickParticles.length, trail.length]);
 
   useEffect(() => {
     // Detect mobile devices
@@ -172,7 +174,7 @@ export default function CursorTrail() {
     <>
       {/* Main cursor core with electromagnetic field */}
       <motion.div
-        className="fixed pointer-events-none z-50 will-change-transform mix-blend-difference"
+        className="fixed pointer-events-none z-[9999] will-change-transform mix-blend-difference"
         style={{
           x: cursorX,
           y: cursorY,
@@ -238,7 +240,7 @@ export default function CursorTrail() {
         return (
           <motion.div
             key={point.id}
-            className="fixed pointer-events-none z-40 will-change-transform"
+            className="fixed pointer-events-none z-[9998] will-change-transform"
             initial={{ scale: 0, opacity: 1 }}
             animate={{ 
               scale,
@@ -269,7 +271,7 @@ export default function CursorTrail() {
       {clickParticles.map((particle) => (
         <motion.div
           key={particle.id}
-          className="fixed pointer-events-none z-45 will-change-transform"
+          className="fixed pointer-events-none z-[9997] will-change-transform"
           style={{
             x: particle.x - 2,
             y: particle.y - 2,
@@ -289,7 +291,7 @@ export default function CursorTrail() {
       {/* Click ripple effect */}
       {lastClick && (
         <motion.div
-          className="fixed pointer-events-none z-40"
+          className="fixed pointer-events-none z-[9996]"
           style={{
             x: lastClick.x - 25,
             y: lastClick.y - 25,
@@ -304,7 +306,7 @@ export default function CursorTrail() {
       )}
 
       {/* Background electromagnetic distortion */}
-      <div className="fixed inset-0 pointer-events-none z-10">
+      <div className="fixed inset-0 pointer-events-none z-0">
         {trail.slice(0, 5).map((point, index) => (
           <motion.div
             key={`bg-${point.id}`}
