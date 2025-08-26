@@ -86,13 +86,13 @@ export default function ProjectsSection() {
                   </div>
                   
                   {/* Main image container */}
-                  <div className="relative z-10 w-full max-w-sm">
-                    <div className="relative bg-gradient-to-br from-white/5 to-white/10 rounded-3xl p-6 backdrop-blur-sm border border-white/20 shadow-2xl">
+                  <div className="relative z-10 w-full max-w-lg">
+                    <div className="relative bg-gradient-to-br from-white/5 to-white/10 rounded-3xl p-8 backdrop-blur-sm border border-white/20 shadow-2xl">
                       <Image
                         src="/app.avif"
                         alt="Medeo App Screenshot"
-                        width={300}
-                        height={300}
+                        width={400}
+                        height={400}
                         className="w-full h-auto object-contain rounded-2xl drop-shadow-2xl"
                         priority
                       />
