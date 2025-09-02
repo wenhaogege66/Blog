@@ -20,6 +20,12 @@ const ThreeBackground = dynamic(
   { ssr: false }
 );
 
+// Dynamically import Zenitsu character to avoid SSR issues
+const ZenitsuCharacter = dynamic(
+  () => import("@/components/ui/zenitsu-character"),
+  { ssr: false }
+);
+
 // Mock data for now - we'll fetch this client-side
 const mockPosts = [
   {
@@ -103,6 +109,9 @@ export default function Home() {
       {/* UI Enhancements */}
       <SmoothScroll />
       <BackToTop />
+      
+      {/* Zenitsu Character */}
+      <ZenitsuCharacter />
     </div>
   );
 }
