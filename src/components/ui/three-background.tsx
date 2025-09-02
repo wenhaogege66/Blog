@@ -3,10 +3,12 @@
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useRef, useMemo } from "react";
 import { Points, PointMaterial } from "@react-three/drei";
+import { useTheme } from "@/contexts/theme-context";
 
 function StarField() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const ref = useRef<any>(null);
+  const { theme } = useTheme();
   
   const [positions, colors] = useMemo(() => {
     const positions = new Float32Array(5000 * 3);
@@ -17,14 +19,22 @@ function StarField() {
       positions[i * 3 + 1] = (Math.random() - 0.5) * 20;
       positions[i * 3 + 2] = (Math.random() - 0.5) * 20;
       
-      // Blue-ish colors
-      colors[i * 3] = Math.random() * 0.5 + 0.5;
-      colors[i * 3 + 1] = Math.random() * 0.5 + 0.8;
-      colors[i * 3 + 2] = 1;
+      // Theme-aware colors
+      if (theme === "light") {
+        // Warmer blue tones for light theme
+        colors[i * 3] = Math.random() * 0.3 + 0.4;     // Red channel (darker)
+        colors[i * 3 + 1] = Math.random() * 0.4 + 0.6; // Green channel
+        colors[i * 3 + 2] = Math.random() * 0.2 + 0.8; // Blue channel (bright)
+      } else {
+        // Cooler cyan-green tones for dark theme  
+        colors[i * 3] = Math.random() * 0.3 + 0.2;     // Red channel (low)
+        colors[i * 3 + 1] = Math.random() * 0.4 + 0.6; // Green channel
+        colors[i * 3 + 2] = Math.random() * 0.3 + 0.7; // Blue channel
+      }
     }
     
     return [positions, colors];
-  }, []);
+  }, [theme]);
   
   useFrame((state) => {
     if (ref.current) {

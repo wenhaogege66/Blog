@@ -56,7 +56,7 @@ const achievements = [
     title: "ZJU Campus Star",
     description: "Zhejiang University Computer Science Department Recognition",
     icon: Users,
-    year: "2024"
+    year: "2025"
   }
 ];
 

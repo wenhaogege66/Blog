@@ -65,7 +65,7 @@ export default function Home() {
     fetchPosts();
   }, []);
   return (
-    <div className="relative min-h-screen bg-background text-foreground">
+    <div className="relative min-h-screen text-foreground">
       {/* Animated Backgrounds */}
       <ThreeBackground />
       <ParticlesBackground />
