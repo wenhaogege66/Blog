@@ -218,7 +218,7 @@ export default function ZenitsuCharacter({
       document.removeEventListener('touchmove', handleTouchMove);
       document.removeEventListener('touchend', handleMouseUp);
     };
-  }, [isDragging, dragOffset, position, onPositionChange, isMobile]);
+  }, [isDragging, dragOffset, position, onPositionChange, isMobile, showChatBubble]);
 
   return (
     <>

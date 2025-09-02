@@ -20,7 +20,9 @@ interface ChatBubble {
 interface ZenitsuExpression {
   emoji: string;
   color: string;
-  animation?: object;
+  animation?: {
+    [key: string]: number | number[];
+  };
 }
 
 const expressions: Record<string, ZenitsuExpression> = {
@@ -50,8 +52,8 @@ export default function EnhancedZenitsu({
   
   const sounds = useZenitsuSounds();
 
-  // 扩展的善逸台词库
-  const expressionMessages = {
+  // 扩展的善逸台词库 - 使用useCallback记忆化
+  const expressionMessages = useCallback(() => ({
     happy: [
       "今天天气真好呢！⚡",
       "编程让我快乐！",
@@ -83,7 +85,7 @@ export default function EnhancedZenitsu({
       "梦到了禰豆子炭...",
       "zzz...编程梦..."
     ]
-  };
+  }), []);
 
   // 根据页面位置和时间显示不同的提示消息
   const getBubbleMessage = useCallback((): ChatBubble => {
@@ -180,12 +182,12 @@ export default function EnhancedZenitsu({
     } else {
       const expressionKeys = Object.keys(expressions) as (keyof typeof expressions)[];
       selectedExpression = expressionKeys[Math.floor(Math.random() * expressionKeys.length)];
-      const messages = expressionMessages[selectedExpression];
+      const messages = expressionMessages()[selectedExpression as keyof ReturnType<typeof expressionMessages>];
       message = messages[Math.floor(Math.random() * messages.length)];
     }
 
     showChatBubble({ message, duration: 2500 }, selectedExpression);
-  }, [isDragging, clickCount, sounds, showChatBubble]);
+  }, [isDragging, clickCount, sounds, showChatBubble, expressionMessages, soundEnabled]);
 
   // 拖拽处理
   const handleMouseDown = (e: React.MouseEvent) => {

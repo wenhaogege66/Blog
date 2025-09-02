@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useCallback } from "react";
+import { useCallback } from "react";
 
 export interface ZenitsuSounds {
   playClick: () => void;
@@ -9,16 +9,15 @@ export interface ZenitsuSounds {
 }
 
 export function useZenitsuSounds(): ZenitsuSounds {
-  const clickSoundRef = useRef<HTMLAudioElement | null>(null);
-  const dragSoundRef = useRef<HTMLAudioElement | null>(null);
-  const welcomeSoundRef = useRef<HTMLAudioElement | null>(null);
-
   // 创建音效（使用Web Audio API生成简单音效）
   const createBeep = useCallback((frequency: number, duration: number) => {
     if (typeof window === 'undefined') return;
     
     try {
-      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      // 修复TypeScript错误
+      const AudioContextClass = window.AudioContext || (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+      if (!AudioContextClass) return;
+      const audioContext = new AudioContextClass();
       const oscillator = audioContext.createOscillator();
       const gainNode = audioContext.createGain();
 
@@ -33,7 +32,7 @@ export function useZenitsuSounds(): ZenitsuSounds {
 
       oscillator.start();
       oscillator.stop(audioContext.currentTime + duration);
-    } catch (error) {
+    } catch {
       // 如果音频API不可用，静默处理
       console.log('Audio not available');
     }
