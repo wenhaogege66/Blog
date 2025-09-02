@@ -20,9 +20,15 @@ const ThreeBackground = dynamic(
   { ssr: false }
 );
 
-// Dynamically import Zenitsu character to avoid SSR issues
-const ZenitsuCharacter = dynamic(
-  () => import("@/components/ui/zenitsu-character"),
+// Dynamically import Enhanced Zenitsu character to avoid SSR issues
+const EnhancedZenitsu = dynamic(
+  () => import("@/components/ui/enhanced-zenitsu"),
+  { ssr: false }
+);
+
+// Dynamically import Zenitsu controls
+const ZenitsuControls = dynamic(
+  () => import("@/components/ui/zenitsu-controls"),
   { ssr: false }
 );
 
@@ -52,6 +58,8 @@ const mockPosts = [
 
 export default function Home() {
   const [posts, setPosts] = useState(mockPosts);
+  const [zenitsuVisible, setZenitsuVisible] = useState(true);
+  const [zenitsuSoundEnabled, setZenitsuSoundEnabled] = useState(true);
 
   useEffect(() => {
     // Fetch posts from API
@@ -110,8 +118,17 @@ export default function Home() {
       <SmoothScroll />
       <BackToTop />
       
-      {/* Zenitsu Character */}
-      <ZenitsuCharacter />
+      {/* Enhanced Zenitsu Character */}
+      <EnhancedZenitsu 
+        visible={zenitsuVisible}
+        soundEnabled={zenitsuSoundEnabled}
+      />
+      
+      {/* Zenitsu Control Panel */}
+      <ZenitsuControls
+        onToggleVisible={setZenitsuVisible}
+        onToggleSound={setZenitsuSoundEnabled}
+      />
     </div>
   );
 }
