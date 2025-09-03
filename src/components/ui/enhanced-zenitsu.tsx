@@ -49,6 +49,8 @@ export default function EnhancedZenitsu({
   const [isMobile, setIsMobile] = useState(false);
   const [currentExpression, setCurrentExpression] = useState<keyof typeof expressions>('happy');
   const [clickCount, setClickCount] = useState(0);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isMouseNearby, setIsMouseNearby] = useState(false);
   
   const sounds = useZenitsuSounds();
 
@@ -134,33 +136,37 @@ export default function EnhancedZenitsu({
     }, bubbleData.duration);
   }, [getBubbleMessage]);
 
-  // 初始化和欢迎消息
-  useEffect(() => {
-    setTimeout(() => {
-      if (soundEnabled) sounds.playWelcome();
-      showChatBubble({ message: "欢迎来到我的博客！我是吾妻善逸⚡", duration: 4000 }, 'excited');
-    }, 3000);
-  }, [showChatBubble, sounds, soundEnabled]);
+  // 移除自动欢迎消息，让善逸更安静
 
-  // 监听滚动事件
+  // 移除滚动自动提示，让善逸只在用户点击时响应
+  
+  // 添加鼠标跟踪效果
   useEffect(() => {
-    let scrollTimeout: NodeJS.Timeout;
-    
-    const handleScroll = () => {
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(() => {
-        if (Math.random() > 0.85) {
-          showChatBubble();
-        }
-      }, 2000);
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+      
+      // 计算鼠标与善逸的距离
+      const zenitsuCenterX = position.x + (isMobile ? 40 : 60);
+      const zenitsuCenterY = position.y + (isMobile ? 50 : 75);
+      const distance = Math.sqrt(
+        Math.pow(e.clientX - zenitsuCenterX, 2) + 
+        Math.pow(e.clientY - zenitsuCenterY, 2)
+      );
+      
+      // 如果鼠标距离善逸很近，改变表情
+      const isNearby = distance < 150;
+      setIsMouseNearby(isNearby);
+      
+      if (isNearby && currentExpression === 'happy') {
+        setCurrentExpression('shy');
+      } else if (!isNearby && currentExpression === 'shy') {
+        setCurrentExpression('happy');
+      }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      clearTimeout(scrollTimeout);
-    };
-  }, [showChatBubble]);
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, [position, isMobile, currentExpression]);
 
   // 处理角色点击 - 增强版
   const handleClick = useCallback(() => {
@@ -390,19 +396,66 @@ export default function EnhancedZenitsu({
               }}
             />
             
-            {/* 表情和文字 */}
-            <div className="text-center z-10">
+            {/* 善逸脸部设计 */}
+            <div className="text-center z-10 relative">
+              {/* 眼睛 */}
+              <div className="flex justify-center items-center mb-1 gap-1">
+                <motion.div 
+                  className="w-2 h-2 bg-gray-800 rounded-full"
+                  animate={{ 
+                    x: isMouseNearby ? (mousePosition.x > position.x + 60 ? 1 : -1) : 0,
+                    y: isMouseNearby ? (mousePosition.y > position.y + 75 ? 1 : -1) : 0,
+                    scale: currentExpression === 'excited' ? [1, 1.3, 1] : 1
+                  }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                />
+                <motion.div 
+                  className="w-2 h-2 bg-gray-800 rounded-full ml-1"
+                  animate={{ 
+                    x: isMouseNearby ? (mousePosition.x > position.x + 60 ? 1 : -1) : 0,
+                    y: isMouseNearby ? (mousePosition.y > position.y + 75 ? 1 : -1) : 0,
+                    scale: currentExpression === 'excited' ? [1, 1.3, 1] : 1
+                  }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                />
+              </div>
+              
+              {/* 嘴巴表情 */}
               <motion.div 
-                className={`${isMobile ? 'text-xl' : 'text-3xl'} mb-1`}
+                className={`${isMobile ? 'text-lg' : 'text-2xl'} mb-1`}
                 animate={{ 
-                  rotate: currentExpression === 'shy' ? [0, -10, 10, 0] : 0,
+                  rotate: currentExpression === 'shy' ? [0, -5, 5, 0] : 0,
                   scale: currentExpression === 'excited' ? [1, 1.2, 1] : 1
                 }}
                 transition={{ duration: 1, repeat: Infinity }}
               >
-                {currentExpr.emoji}
+                {currentExpression === 'happy' && '😊'}
+                {currentExpression === 'excited' && '⚡'}
+                {currentExpression === 'shy' && '😳'}
+                {currentExpression === 'scared' && '😰'}
+                {currentExpression === 'determined' && '😤'}
+                {currentExpression === 'sleeping' && '😴'}
               </motion.div>
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-bold text-yellow-800`}>
+              
+              {/* 头发装饰 */}
+              <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                <motion.div 
+                  className="text-orange-300 text-xs"
+                  animate={{ 
+                    rotate: [0, 5, -5, 0],
+                    scale: [1, 1.1, 1]
+                  }}
+                  transition={{ 
+                    duration: 2, 
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                >
+                  🌟
+                </motion.div>
+              </div>
+              
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-bold text-yellow-800 mt-1`}>
                 善逸
               </div>
             </div>
