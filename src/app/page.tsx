@@ -20,9 +20,9 @@ const ThreeBackground = dynamic(
   { ssr: false }
 );
 
-// Dynamically import Enhanced Zenitsu character to avoid SSR issues
-const EnhancedZenitsu = dynamic(
-  () => import("@/components/ui/enhanced-zenitsu"),
+// Dynamically import Simple Live2D character to avoid SSR issues
+const SimpleLive2D = dynamic(
+  () => import("@/components/ui/simple-live2d"),
   { ssr: false }
 );
 
@@ -118,8 +118,8 @@ export default function Home() {
       <SmoothScroll />
       <BackToTop />
       
-      {/* Enhanced Zenitsu Character */}
-      <EnhancedZenitsu 
+      {/* Live2D Character */}
+      <SimpleLive2D 
         visible={zenitsuVisible}
         soundEnabled={zenitsuSoundEnabled}
       />

@@ -51,14 +51,14 @@ export default function ZenitsuControls({
             className="absolute top-16 right-0 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-yellow-200 dark:border-yellow-600 p-4 min-w-[200px]"
           >
             <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-3 text-center">
-              善逸控制面板 ⚡
+              Live2D控制面板 ✨
             </h3>
             
             <div className="space-y-3">
               {/* 显示/隐藏控制 */}
               <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-700 dark:text-gray-300">
-                  显示善逸
+                  显示角色
                 </span>
                 <button
                   onClick={handleToggleVisible}
@@ -92,9 +92,9 @@ export default function ZenitsuControls({
               {/* 使用说明 */}
               <div className="pt-3 border-t border-gray-200 dark:border-gray-600">
                 <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
-                  💡 拖拽善逸移动位置<br />
-                  🖱️ 点击善逸进行互动<br />
-                  📜 滚动页面获得提示
+                  💡 拖拽角色移动位置<br />
+                  🖱️ 点击角色进行互动<br />
+                  👀 鼠标靠近有惊喜
                 </p>
               </div>
             </div>
