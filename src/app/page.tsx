@@ -20,9 +20,9 @@ const ThreeBackground = dynamic(
   { ssr: false }
 );
 
-// Dynamically import Simple Live2D character to avoid SSR issues
-const SimpleLive2D = dynamic(
-  () => import("@/components/ui/simple-live2d"),
+// Dynamically import Improved Live2D character to avoid SSR issues
+const ImprovedLive2D = dynamic(
+  () => import("@/components/ui/improved-live2d"),
   { ssr: false }
 );
 
@@ -119,7 +119,7 @@ export default function Home() {
       <BackToTop />
       
       {/* Live2D Character */}
-      <SimpleLive2D 
+      <ImprovedLive2D 
         visible={zenitsuVisible}
         soundEnabled={zenitsuSoundEnabled}
       />

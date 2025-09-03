@@ -76,18 +76,14 @@ export default function ProjectsSection() {
           <Card className="border-gradient-to-r border-cyan-500/30 bg-background/50 backdrop-blur-sm overflow-hidden group hover:border-cyan-500/50 transition-all duration-500">
             <CardContent className="p-0">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
-                {/* Project Image/Preview */}
-                <div className="relative bg-gradient-to-br from-cyan-900/10 via-purple-900/10 to-blue-900/10 p-4 sm:p-8 flex items-center justify-center min-h-[300px] sm:min-h-[400px] overflow-hidden">
-                  {/* Animated background elements */}
-                  <div className="absolute inset-0">
-                    <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl animate-pulse"></div>
-                    <div className="absolute bottom-1/4 right-1/4 w-24 h-24 bg-purple-500/10 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-                    <div className="absolute top-3/4 left-1/2 w-20 h-20 bg-blue-500/10 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '2s' }}></div>
-                  </div>
+                {/* Project Image/Preview - Optimized Layout */}
+                <div className="relative bg-gradient-to-br from-cyan-900/5 via-purple-900/5 to-blue-900/5 pl-2 sm:pl-6 lg:pl-8 pr-4 sm:pr-8 py-4 sm:py-8 flex items-center justify-center min-h-[300px] sm:min-h-[400px] overflow-hidden">
+                  {/* Unified background gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/8 via-transparent to-purple-500/8"></div>
                   
-                  {/* Main image container */}
-                  <div className="relative z-10 w-full max-w-lg sm:max-w-3xl lg:max-w-5xl">
-                    <div className="relative bg-gradient-to-br from-white/5 to-white/10 rounded-3xl p-8 sm:p-12 lg:p-16 backdrop-blur-sm border border-white/20 shadow-2xl">
+                  {/* Main image container - Full width utilization */}
+                  <div className="relative z-10 w-full">
+                    <div className="relative bg-gradient-to-br from-white/8 to-white/12 rounded-3xl p-6 sm:p-10 lg:p-12 backdrop-blur-sm border border-white/25 shadow-2xl">
                       <LazyImage
                         src="/app.avif"
                         alt="Medeo App Screenshot"
@@ -97,8 +93,12 @@ export default function ProjectsSection() {
                         priority
                         unoptimized
                       />
-                      {/* Glow effect */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-purple-500/20 rounded-3xl blur-xl opacity-50"></div>
+                      {/* Enhanced glow effect */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/15 to-purple-400/15 rounded-3xl blur-xl opacity-60"></div>
+                      
+                      {/* Subtle corner accents */}
+                      <div className="absolute top-4 left-4 w-16 h-16 bg-cyan-400/10 rounded-full blur-xl"></div>
+                      <div className="absolute bottom-4 right-4 w-12 h-12 bg-purple-400/10 rounded-full blur-xl"></div>
                     </div>
                   </div>
                 </div>
