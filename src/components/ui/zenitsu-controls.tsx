@@ -14,7 +14,7 @@ export default function ZenitsuControls({
   onToggleSound
 }: ZenitsuControlsProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [zenitsuVisible, setZenitsuVisible] = useState(true);
+  const [zenitsuVisible, setZenitsuVisible] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
 
   const handleToggleVisible = () => {
