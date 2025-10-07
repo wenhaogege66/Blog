@@ -1,5 +1,5 @@
 ---
-title: "Welcome to My Tech Blog"
+title: "（AI自己搓的）Welcome to My Tech Blog"
 date: "2025-01-22"
 excerpt: "Welcome to my personal blog where I share insights about modern web development, coding tips, and my journey as a full-stack developer."
 tags: ["welcome", "blog", "tech", "development"]

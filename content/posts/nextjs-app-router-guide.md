@@ -1,5 +1,5 @@
 ---
-title: "Mastering Next.js App Router: A Complete Guide"
+title: "（AI自己搓的）Mastering Next.js App Router: A Complete Guide"
 date: "2025-01-20"
 excerpt: "Deep dive into Next.js App Router features, including nested layouts, server components, and advanced routing patterns."
 tags: ["nextjs", "react", "app-router", "server-components"]
