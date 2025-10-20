@@ -6,6 +6,7 @@ import { GraduationCap, Code, Heart, Zap, Globe, Briefcase, BookOpen, Dumbbell, 
 import { Card, CardContent } from "@/components/ui/card";
 import MagneticHover from "@/components/ui/magnetic-hover";
 import TechIcon from "@/components/ui/tech-icon";
+import PersonalGallery from "@/components/ui/personal-gallery";
 import Image from "next/image";
 
 const skills = [
@@ -28,6 +29,7 @@ const interests = [
   { name: "Gaming", icon: Gamepad2, description: "Strategy & adventure games" },
   { name: "Investment", icon: Briefcase, description: "Financial markets & tech stocks" },
 ];
+
 
 export default function AboutSection() {
   const [ref, inView] = useInView({
@@ -192,13 +194,30 @@ export default function AboutSection() {
           ))}
         </motion.div>
 
-        {/* Personal Interests */}
+        {/* Personal Photo Gallery */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           viewport={{ once: true }}
           className="text-center mb-12"
+        >
+          <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-cyan-400 to-purple-600 bg-clip-text text-transparent">
+            Personal Gallery
+          </h3>
+          <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
+            Moments and memories that inspire me - from favorite anime to travel adventures.
+          </p>
+          <PersonalGallery />
+        </motion.div>
+
+        {/* Personal Interests */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="text-center mb-12 mt-16"
         >
           <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-cyan-400 to-purple-600 bg-clip-text text-transparent">
             Personal Interests
@@ -212,7 +231,7 @@ export default function AboutSection() {
           variants={containerVariants}
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16"
         >
           {interests.map((interest) => (
             <motion.div key={interest.name} variants={itemVariants}>
@@ -236,6 +255,7 @@ export default function AboutSection() {
             </motion.div>
           ))}
         </motion.div>
+
       </div>
     </section>
   );

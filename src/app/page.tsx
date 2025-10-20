@@ -20,18 +20,6 @@ const ThreeBackground = dynamic(
   { ssr: false }
 );
 
-// Dynamically import Improved Live2D character to avoid SSR issues
-const ImprovedLive2D = dynamic(
-  () => import("@/components/ui/improved-live2d"),
-  { ssr: false }
-);
-
-// Dynamically import Zenitsu controls
-const ZenitsuControls = dynamic(
-  () => import("@/components/ui/zenitsu-controls"),
-  { ssr: false }
-);
-
 // Mock data for now - we'll fetch this client-side
 const mockPosts = [
   {
@@ -58,8 +46,6 @@ const mockPosts = [
 
 export default function Home() {
   const [posts, setPosts] = useState(mockPosts);
-  const [zenitsuVisible, setZenitsuVisible] = useState(true);
-  const [zenitsuSoundEnabled, setZenitsuSoundEnabled] = useState(true);
 
   useEffect(() => {
     // Fetch posts from API
@@ -117,18 +103,6 @@ export default function Home() {
       {/* UI Enhancements */}
       <SmoothScroll />
       <BackToTop />
-      
-      {/* Live2D Character */}
-      <ImprovedLive2D 
-        visible={zenitsuVisible}
-        soundEnabled={zenitsuSoundEnabled}
-      />
-      
-      {/* Zenitsu Control Panel */}
-      <ZenitsuControls
-        onToggleVisible={setZenitsuVisible}
-        onToggleSound={setZenitsuSoundEnabled}
-      />
     </div>
   );
 }
