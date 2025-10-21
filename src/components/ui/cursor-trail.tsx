@@ -40,17 +40,17 @@ export default function CursorTrail() {
   // Enhanced mouse move handler with electromagnetic effect
   const handleMouseMove = useCallback((e: MouseEvent) => {
     const now = performance.now();
-    if (now - lastTimeRef.current < 16) return; // ~60fps for better performance
-    
+    if (now - lastTimeRef.current < 32) return; // ~30fps for better performance
+
     lastTimeRef.current = now;
-    
+
     mouseX.set(e.clientX);
     mouseY.set(e.clientY);
-    
+
     if (animationFrameRef.current) {
       cancelAnimationFrame(animationFrameRef.current);
     }
-    
+
     animationFrameRef.current = requestAnimationFrame(() => {
       const newPoint: TrailPoint = {
         x: e.clientX,
@@ -60,7 +60,7 @@ export default function CursorTrail() {
       };
 
       setTrail(prev => {
-        const updatedTrail = [newPoint, ...prev.slice(0, 12)]; // Reduced for better performance
+        const updatedTrail = [newPoint, ...prev.slice(0, 5)]; // Reduced to 6 points for better performance
         return updatedTrail;
       });
     });
@@ -69,10 +69,10 @@ export default function CursorTrail() {
   // Click particle burst effect
   const handleClick = useCallback((e: MouseEvent) => {
     setLastClick({ x: e.clientX, y: e.clientY });
-    
-    const particleCount = 12;
+
+    const particleCount = 6; // Reduced from 12 to 6
     const newParticles: ClickParticle[] = [];
-    
+
     for (let i = 0; i < particleCount; i++) {
       const angle = (i / particleCount) * Math.PI * 2;
       const velocity = 50 + Math.random() * 100;
@@ -85,7 +85,7 @@ export default function CursorTrail() {
         life: 1,
       });
     }
-    
+
     setClickParticles(prev => [...prev, ...newParticles]);
   }, []);
 
@@ -253,14 +253,11 @@ export default function CursorTrail() {
             }}
             transition={{ duration: 0.2, ease: "easeOut" }}
           >
-            <div 
+            <div
               className="w-1.5 h-1.5 rounded-full transform-gpu"
               style={{
                 background: `hsl(${hue}, 70%, 60%)`,
-                boxShadow: `
-                  0 0 ${4 + index * 0.5}px hsl(${hue}, 70%, 60%, ${opacity * 0.8}),
-                  0 0 ${8 + index * 1}px hsl(${hue}, 70%, 60%, ${opacity * 0.4})
-                `,
+                boxShadow: `0 0 4px hsl(${hue}, 70%, 60%, ${opacity * 0.6})`, // Simplified shadow
               }}
             />
           </motion.div>
@@ -282,7 +279,7 @@ export default function CursorTrail() {
             style={{
               opacity: particle.life,
               scale: particle.life,
-              boxShadow: `0 0 ${particle.life * 8}px rgba(34, 211, 238, ${particle.life * 0.8})`,
+              boxShadow: `0 0 4px rgba(34, 211, 238, ${particle.life * 0.5})`, // Simplified shadow
             }}
           />
         </motion.div>
@@ -304,33 +301,6 @@ export default function CursorTrail() {
           <div className="w-12 h-12 border-2 border-cyan-400/60 rounded-full" />
         </motion.div>
       )}
-
-      {/* Background electromagnetic distortion */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        {trail.slice(0, 5).map((point, index) => (
-          <motion.div
-            key={`bg-${point.id}`}
-            className="absolute"
-            style={{
-              x: point.x - 100,
-              y: point.y - 100,
-            }}
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ 
-              scale: 1 - index * 0.2,
-              opacity: 0.05 - index * 0.01,
-            }}
-            transition={{ duration: 1, ease: "easeOut" }}
-          >
-            <div 
-              className="w-48 h-48 rounded-full blur-3xl transform-gpu"
-              style={{
-                background: `radial-gradient(circle, rgba(34, 211, 238, ${0.1 - index * 0.02}) 0%, transparent 70%)`,
-              }}
-            />
-          </motion.div>
-        ))}
-      </div>
 
       {/* Hide default cursor */}
       <style jsx global>{`

@@ -7,9 +7,7 @@ import AboutSection from "@/components/about-section";
 import ProjectsSection from "@/components/projects-section";
 import BlogSection from "@/components/blog-section";
 import ContactSection from "@/components/contact-section";
-import ParticlesBackground from "@/components/ui/particles-background";
 import CursorTrail from "@/components/ui/cursor-trail";
-import ClickRipple from "@/components/ui/click-ripple";
 import SmoothScroll from "@/components/ui/smooth-scroll";
 import BackToTop from "@/components/ui/back-to-top";
 import { useEffect, useState } from "react";
@@ -68,12 +66,10 @@ export default function Home() {
     <div className="relative min-h-screen text-foreground">
       {/* Animated Backgrounds */}
       <ThreeBackground />
-      <ParticlesBackground />
-      
+
       {/* Cursor Effects */}
       <CursorTrail />
-      <ClickRipple />
-      
+
       {/* Navigation */}
       <Navigation />
       
