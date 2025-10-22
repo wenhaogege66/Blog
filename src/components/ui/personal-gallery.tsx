@@ -21,23 +21,23 @@ interface GallerySection {
 
 // 爱好相关 - 动漫、游戏
 const hobbiesImages: GalleryImage[] = [
-  { src: "/personal/鬼灭1.jpg", alt: "鬼灭之刃 1", category: "hobbies", description: "最喜欢的动漫之一" },
-  { src: "/personal/鬼灭2.jpg", alt: "鬼灭之刃 2", category: "hobbies", description: "精彩的战斗场景" },
-  { src: "/personal/鬼灭3.jpg", alt: "鬼灭之刃 3", category: "hobbies", description: "经典角色" },
-  { src: "/personal/进击.jpg", alt: "进击的巨人", category: "hobbies", description: "震撼的剧情" },
-  { src: "/personal/无畏契约.jpg", alt: "无畏契约", category: "hobbies", description: "喜欢的FPS游戏" },
+  { src: "/personal/鬼灭1.jpg", alt: "鬼灭之刃 1", category: "hobbies", description: "雷霆一闪" },
+  { src: "/personal/鬼灭2.jpg", alt: "鬼灭之刃 2", category: "hobbies", description: "猪突猛进" },
+  { src: "/personal/鬼灭3.jpg", alt: "鬼灭之刃 3", category: "hobbies", description: "通透世界" },
+  { src: "/personal/进击.jpg", alt: "进击的巨人", category: "hobbies", description: "耶格尔派" },
+  { src: "/personal/无畏契约.jpg", alt: "无畏契约", category: "hobbies", description: "瓦学弟" },
 ];
 
 // 个人生活照 - 按时间顺序
 const lifeImages: GalleryImage[] = [
-  { src: "/personal/上海行1.jpg", alt: "上海之行 1", category: "life", description: "大一 - 上海探索" },
-  { src: "/personal/上海行2.jpg", alt: "上海之行 2", category: "life", description: "大一 - 城市风光" },
-  { src: "/personal/创赛.jpg", alt: "创新创业大赛", category: "life", description: "大二 - 创赛参赛" },
-  { src: "/personal/舟山行1.jpg", alt: "舟山之旅 1", category: "life", description: "大三清明 - 舟山海边" },
-  { src: "/personal/舟山行2.jpg", alt: "舟山之旅 2", category: "life", description: "大三清明 - 美丽风景" },
-  { src: "/personal/入院仪式.jpg", alt: "Xlab入院仪式", category: "life", description: "大三5月 - Xlab入院仪式" },
-  { src: "/personal/黑客松.jpg", alt: "黑客松活动", category: "life", description: "假期 - 黑客松比赛" },
-  { src: "/personal/一拖二.jpg", alt: "健身日常", category: "life", description: "最近 - 带室友健身" },
+  { src: "/personal/上海行1.jpg", alt: "上海之行 1", category: "life", description: "大一" },
+  { src: "/personal/上海行2.jpg", alt: "上海之行 2", category: "life", description: "大一" },
+  { src: "/personal/创赛.jpg", alt: "创新创业大赛", category: "life", description: "大二" },
+  { src: "/personal/舟山行1.jpg", alt: "舟山之旅 1", category: "life", description: "大三" },
+  { src: "/personal/舟山行2.jpg", alt: "舟山之旅 2", category: "life", description: "大三" },
+  { src: "/personal/入院仪式.jpg", alt: "Xlab入院仪式", category: "life", description: "大三" },
+  { src: "/personal/黑客松.jpg", alt: "黑客松活动", category: "life", description: "大四" },
+  { src: "/personal/一拖二.jpg", alt: "健身日常", category: "life", description: "大四" },
 ];
 
 const gallerySections: GallerySection[] = [
