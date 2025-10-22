@@ -15,9 +15,9 @@ export default function GiscusComments({ className = "" }: GiscusCommentsProps) 
       <Giscus
         id="comments"
         repo="wenhaogege66/Blog"
-        repoId="R_kgDONdxAJw" // You'll need to get this from https://giscus.app
+        repoId="R_kgDOPiapOw" // You'll need to get this from https://giscus.app
         category="General"
-        categoryId="DIC_kwDONdxAJ84CleKu" // You'll need to get this from https://giscus.app
+        categoryId="DIC_kwDOPiapO84Cw63l" // You'll need to get this from https://giscus.app
         mapping="pathname"
         strict="0"
         reactionsEnabled="1"
