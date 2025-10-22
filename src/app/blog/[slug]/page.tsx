@@ -1,10 +1,11 @@
 import { notFound } from "next/navigation";
-import { Calendar, Clock, User, ArrowLeft, Tag } from "lucide-react";
+import { Calendar, Clock, User, ArrowLeft, Tag, MessageSquare } from "lucide-react";
 import Link from "next/link";
 import { getPostBySlug, markdownToHtml, getRelatedPosts, getAllPosts } from "@/lib/blog";
 import { Badge } from "@/components/ui/badge";
 import BlogCard from "@/components/blog-card";
 import NeonButton from "@/components/ui/neon-button";
+import GiscusComments from "@/components/ui/giscus-comments";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -120,6 +121,20 @@ export default async function BlogPostPage({ params }: Props) {
             dangerouslySetInnerHTML={{ __html: htmlContent }}
           />
         </article>
+
+        {/* Comments Section */}
+        <section className="border-t border-cyan-500/20 pt-16 mb-16">
+          <div className="flex items-center gap-3 mb-8">
+            <MessageSquare className="w-6 h-6 text-cyan-400" />
+            <h2 className="text-2xl font-bold text-cyan-400">
+              Comments
+            </h2>
+          </div>
+          <p className="text-muted-foreground mb-6">
+            欢迎在下方留言讨论!评论需要GitHub账号,也可以点赞表示支持 👍
+          </p>
+          <GiscusComments className="mt-8" />
+        </section>
 
         {/* Related Posts */}
         {relatedPosts.length > 0 && (

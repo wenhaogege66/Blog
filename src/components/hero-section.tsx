@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { Github, Linkedin, Mail, ArrowDown } from "lucide-react";
+import { Github, Mail, ArrowDown } from "lucide-react";
 import TypingAnimation from "@/components/ui/typing-animation";
 import NeonButton from "@/components/ui/neon-button";
 
@@ -111,9 +111,6 @@ export default function HeroSection() {
             </NeonButton>
             <NeonButton href="mailto:wenhaogege66@gmail.com" variant="ghost">
               <Mail className="w-5 h-5" />
-            </NeonButton>
-            <NeonButton href="#" variant="ghost">
-              <Linkedin className="w-5 h-5" />
             </NeonButton>
           </motion.div>
 

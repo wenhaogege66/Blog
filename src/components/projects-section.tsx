@@ -126,11 +126,25 @@ export default function ProjectsSection() {
                     </a>
                   </div>
 
-                  <p className="text-muted-foreground mb-6 leading-relaxed">
-                    An innovative AI-powered video generation and editing platform that leverages cutting-edge artificial intelligence 
-                    to create, enhance, and edit videos. Features intelligent scene generation, automated editing workflows, 
+                  <p className="text-muted-foreground mb-4 leading-relaxed">
+                    An innovative AI-powered video generation and editing platform that leverages cutting-edge artificial intelligence
+                    to create, enhance, and edit videos. Features intelligent scene generation, automated editing workflows,
                     and advanced AI-driven video enhancement capabilities for content creators and professionals.
                   </p>
+
+                  <div className="bg-cyan-500/5 border border-cyan-500/20 rounded-lg p-4 mb-6">
+                    <h4 className="text-sm font-semibold text-cyan-300 mb-2 flex items-center gap-2">
+                      <Code className="w-4 h-4" />
+                      My Role & Contributions
+                    </h4>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      As a Software Engineer at Medeo, I focused on <span className="text-cyan-400 font-medium">Infrastructure Backend Development</span>,
+                      designing and implementing scalable backend systems. I worked extensively on <span className="text-cyan-400 font-medium">AI Workflow
+                      Orchestration</span>, building robust pipelines for video processing and generation. Additionally, I contributed to
+                      <span className="text-cyan-400 font-medium"> AI Agent Development</span>, creating intelligent agents that automate
+                      complex video editing tasks and enhance user experience.
+                    </p>
+                  </div>
 
                   <div className="mb-6">
                     <h4 className="text-sm font-semibold text-cyan-300 mb-3">Key Features</h4>
