@@ -15,14 +15,14 @@ export default function GiscusComments({ className = "" }: GiscusCommentsProps) 
       <Giscus
         id="comments"
         repo="wenhaogege66/Blog"
-        repoId="R_kgDOPiapOw" // You'll need to get this from https://giscus.app
-        category="General"
-        categoryId="DIC_kwDOPiapO84Cw63l" // You'll need to get this from https://giscus.app
+        repoId="R_kgDOPiapOw"
+        category="Announcements"
+        categoryId="DIC_kwDOPiapO84Cw63l"
         mapping="pathname"
         strict="0"
         reactionsEnabled="1"
         emitMetadata="0"
-        inputPosition="top"
+        inputPosition="bottom"
         theme={theme === "dark" ? "dark" : "light"}
         lang="zh-CN"
         loading="lazy"

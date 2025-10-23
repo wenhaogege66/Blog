@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import BlogCard from "@/components/blog-card";
 import NeonButton from "@/components/ui/neon-button";
 import GiscusComments from "@/components/ui/giscus-comments";
+import "./markdown.css";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -116,8 +117,8 @@ export default async function BlogPostPage({ params }: Props) {
           </header>
 
           {/* Article Content */}
-          <div 
-            className="prose prose-invert prose-cyan max-w-none prose-headings:text-cyan-400 prose-links:text-cyan-400 prose-code:text-cyan-300 prose-pre:bg-slate-800 prose-pre:border prose-pre:border-cyan-500/20"
+          <div
+            className="markdown-content max-w-none"
             dangerouslySetInnerHTML={{ __html: htmlContent }}
           />
         </article>
