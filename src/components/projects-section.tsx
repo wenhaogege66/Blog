@@ -76,29 +76,35 @@ export default function ProjectsSection() {
           <Card className="border-gradient-to-r border-cyan-500/30 bg-background/50 backdrop-blur-sm overflow-hidden group hover:border-cyan-500/50 transition-all duration-500">
             <CardContent className="p-0">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
-                {/* Project Image/Preview - Optimized Layout */}
-                <div className="relative bg-gradient-to-br from-cyan-900/5 via-purple-900/5 to-blue-900/5 pl-2 sm:pl-6 lg:pl-8 pr-4 sm:pr-8 py-4 sm:py-8 flex items-center justify-center min-h-[300px] sm:min-h-[400px] overflow-hidden">
-                  {/* Unified background gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/8 via-transparent to-purple-500/8"></div>
-                  
-                  {/* Main image container - Full width utilization */}
-                  <div className="relative z-10 w-full">
-                    <div className="relative bg-gradient-to-br from-white/8 to-white/12 rounded-3xl p-6 sm:p-10 lg:p-12 backdrop-blur-sm border border-white/25 shadow-2xl">
-                      <LazyImage
-                        src="/app.avif"
-                        alt="Medeo App Screenshot"
-                        width={1000}
-                        height={1000}
-                        className="w-full h-auto object-contain rounded-2xl drop-shadow-2xl"
-                        priority
-                        unoptimized
-                      />
-                      {/* Enhanced glow effect */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/15 to-purple-400/15 rounded-3xl blur-xl opacity-60"></div>
-                      
-                      {/* Subtle corner accents */}
-                      <div className="absolute top-4 left-4 w-16 h-16 bg-cyan-400/10 rounded-full blur-xl"></div>
-                      <div className="absolute bottom-4 right-4 w-12 h-12 bg-purple-400/10 rounded-full blur-xl"></div>
+                {/* Project Image/Preview - Modern Clean Design */}
+                <div className="relative bg-gradient-to-br from-slate-900/50 to-slate-800/30 p-8 sm:p-12 flex items-center justify-center min-h-[300px] sm:min-h-[400px]">
+                  {/* Animated gradient orbs */}
+                  <div className="absolute top-0 right-0 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl animate-pulse"></div>
+                  <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+
+                  {/* Image container */}
+                  <div className="relative z-10 w-full max-w-md">
+                    <div className="relative group">
+                      {/* Glow effect on hover */}
+                      <div className="absolute -inset-4 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-2xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                      {/* Main image */}
+                      <div className="relative bg-gradient-to-br from-slate-800/80 to-slate-900/80 rounded-2xl p-4 border border-cyan-500/20 backdrop-blur-sm shadow-2xl">
+                        <LazyImage
+                          src="/app.avif"
+                          alt="Medeo App Screenshot"
+                          width={1000}
+                          height={1000}
+                          className="w-full h-auto object-contain rounded-xl"
+                          priority
+                          unoptimized
+                        />
+                      </div>
+
+                      {/* Floating badge */}
+                      <div className="absolute -top-2 -right-2 bg-gradient-to-r from-cyan-500 to-purple-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg animate-bounce" style={{ animationDuration: '3s' }}>
+                        Featured
+                      </div>
                     </div>
                   </div>
                 </div>

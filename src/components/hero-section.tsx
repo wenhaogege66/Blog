@@ -73,19 +73,37 @@ export default function HeroSection() {
             Passionate about clean code, innovative solutions, and continuous learning.
           </motion.p>
 
-          {/* Tech Stack Tags */}
+          {/* Tech Stack - Interactive Cards */}
           <motion.div
             variants={itemVariants}
-            className="flex flex-wrap justify-center gap-3 mt-8"
+            className="mt-8"
           >
-            {["React", "Next.js", "TypeScript", "Node.js", "Python", "AWS"].map((tech) => (
-              <span
-                key={tech}
-                className="px-4 py-2 bg-cyan-500/10 border border-cyan-500/20 rounded-full text-cyan-400 text-sm font-medium backdrop-blur-sm"
-              >
-                {tech}
-              </span>
-            ))}
+            <div className="flex flex-wrap justify-center gap-3 max-w-3xl mx-auto">
+              {[
+                { name: "React", color: "from-blue-400 to-cyan-400" },
+                { name: "Next.js", color: "from-slate-300 to-slate-400" },
+                { name: "TypeScript", color: "from-blue-500 to-blue-600" },
+                { name: "Node.js", color: "from-green-400 to-green-500" },
+                { name: "Python", color: "from-yellow-400 to-yellow-500" },
+                { name: "HarmonyOS", color: "from-red-400 to-red-500" },
+              ].map((tech, index) => (
+                <motion.div
+                  key={tech.name}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={inView ? { opacity: 1, scale: 1 } : {}}
+                  transition={{ delay: 1 + index * 0.1, duration: 0.3 }}
+                  whileHover={{ scale: 1.1, y: -5 }}
+                  className="group relative"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <span className="relative block px-5 py-2.5 bg-slate-800/50 border border-cyan-500/30 rounded-full text-sm font-medium backdrop-blur-sm transition-all duration-300 group-hover:border-cyan-400/60">
+                    <span className={`bg-gradient-to-r ${tech.color} bg-clip-text text-transparent font-semibold`}>
+                      {tech.name}
+                    </span>
+                  </span>
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
 
           {/* CTA Buttons */}

@@ -1,12 +1,12 @@
 import { notFound } from "next/navigation";
 import { Calendar, Clock, User, ArrowLeft, Tag, MessageSquare } from "lucide-react";
 import Link from "next/link";
-import { getPostBySlug, markdownToHtml, getRelatedPosts, getAllPosts } from "@/lib/blog";
+import { getPostBySlug, getRelatedPosts, getAllPosts } from "@/lib/blog";
 import { Badge } from "@/components/ui/badge";
 import BlogCard from "@/components/blog-card";
 import NeonButton from "@/components/ui/neon-button";
 import GiscusComments from "@/components/ui/giscus-comments";
-import "./markdown.css";
+import MarkdownRenderer from "@/components/ui/markdown-renderer";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -51,7 +51,6 @@ export default async function BlogPostPage({ params }: Props) {
     notFound();
   }
 
-  const htmlContent = await markdownToHtml(post.content);
   const relatedPosts = getRelatedPosts(slug);
 
   const formatDate = (dateString: string) => {
@@ -117,10 +116,7 @@ export default async function BlogPostPage({ params }: Props) {
           </header>
 
           {/* Article Content */}
-          <div
-            className="markdown-content max-w-none"
-            dangerouslySetInnerHTML={{ __html: htmlContent }}
-          />
+          <MarkdownRenderer content={post.content} />
         </article>
 
         {/* Comments Section */}
