@@ -161,26 +161,30 @@ const components: Components = {
   ),
 
   // 图片
-  img: ({ src, alt }) => (
-    <div className="my-4 rounded-lg overflow-hidden">
-      {src?.startsWith('http') ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={src}
-          alt={alt || ''}
-          className="w-full h-auto rounded-lg"
-        />
-      ) : (
-        <Image
-          src={src || ''}
-          alt={alt || ''}
-          width={800}
-          height={400}
-          className="w-full h-auto rounded-lg"
-        />
-      )}
-    </div>
-  ),
+  img: ({ src, alt }) => {
+    const isExternalImage = typeof src === 'string' && src.startsWith('http');
+
+    return (
+      <div className="my-4 rounded-lg overflow-hidden">
+        {isExternalImage ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={src as string}
+            alt={alt || ''}
+            className="w-full h-auto rounded-lg"
+          />
+        ) : (
+          <Image
+            src={src as string || ''}
+            alt={alt || ''}
+            width={800}
+            height={400}
+            className="w-full h-auto rounded-lg"
+          />
+        )}
+      </div>
+    );
+  },
 
   // 粗体
   strong: ({ children }) => (
